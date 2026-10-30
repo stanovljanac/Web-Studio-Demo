@@ -258,7 +258,7 @@ export const en = {
       "Northlane Studio is a fictional web studio. Its name, prices, contact details, form and privacy policy are made up, and nothing you type here is sent anywhere.",
       "The projects in the Work section are real: each one is live, so you can try it.",
     ],
-    credit: "Designed & built by Mihailo Sebek",
+    credit: "Designed & built by Mihailo Šebek",
     creditLink: "MihailoBuilds",
     newTab: "(opens in a new tab)",
     close: "Got it, show me the site",

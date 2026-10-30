@@ -32,8 +32,8 @@ const scan = (files, list) => {
 scan(distFiles, needles);
 scan(repoFiles, contact);
 
-const named = distFiles.filter((f) => readFileSync(f, "utf8").includes("Mihailo Sebek")).map((f) => relative(ROOT, f));
-console.log(`name "Mihailo Sebek" in: ${named.join(", ") || "nowhere"}`);
+const named = distFiles.filter((f) => /Mihailo (Š|S)ebek/.test(readFileSync(f, "utf8"))).map((f) => relative(ROOT, f));
+console.log(`name "Mihailo Šebek" in: ${named.join(", ") || "nowhere"}`);
 if (!contactSource) console.warn("⚠ no contact source (QA_CONTACT_SOURCE or ../Portfolio/src/data/contact.ts): email/phone not checked");
 if (hits.length) {
   console.error("LEAK:\n  " + [...new Set(hits)].join("\n  "));

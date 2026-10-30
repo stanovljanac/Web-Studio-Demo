@@ -7,7 +7,7 @@ import { pathToFileURL } from "node:url";
 
 // Final public origin of the site — used in canonical, hreflang,
 // og:url/og:image, JSON-LD, sitemap.xml and robots.txt.
-const SITE_URL = "https://mihailobuilds.com";
+const SITE_URL = "https://demostudio.mihailobuilds.com";
 
 const root = process.cwd();
 const dist = path.join(root, "dist");
