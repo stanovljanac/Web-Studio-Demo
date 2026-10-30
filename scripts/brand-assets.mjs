@@ -4,9 +4,10 @@
 
    - public/favicon.ico (16, 32, 48 px) and public/apple-touch-icon.png
      (180 px), from public/favicon.svg
-   - public/og-en.png (1200×630), the social preview:
-     the hero of the built page (eyebrow, title, accent) next to the phone
-     with the salon screenshot, set in the site's own fonts and colours.
+   - public/og.png (1200×630), the social preview: the brand with a
+     "Web Studio Demo" label, the hero of the built page (eyebrow, title,
+     accent) and the phone with the salon screenshot, set in the site's own
+     fonts and colours.
      The copy is read from dist/, so it always matches the site; run the
      build first. Run the script again when the hero copy, the logo or the
      colours change. */
@@ -64,6 +65,9 @@ const page = (eyebrow, lead, accent, host) => `<!doctype html><html><head><meta 
   body { width: 1200px; height: 630px; overflow: hidden; position: relative; background: #F5F7FB; color: #0B1B3F; font-family: Manrope; -webkit-font-smoothing: antialiased; }
   .copy { position: absolute; left: 72px; top: 60px; width: 720px; height: 510px; display: flex; flex-direction: column; }
   .brand { display: flex; align-items: center; gap: 16px; font: 800 30px/1 Manrope; letter-spacing: -0.02em; }
+  .brand .light { font-weight: 500; }
+  .demo { margin-left: 8px; padding: 7px 12px; border-radius: 999px; border: 1.5px solid #0B1B3F;
+    font: 600 14px/1 "JetBrains Mono"; letter-spacing: 0.08em; text-transform: uppercase; }
   .mark { width: 56px; height: 56px; }
   .eyebrow { align-self: flex-start; margin-top: auto; padding: 8px 16px; border-radius: 999px; background: #EEF2FF; color: #1F45E0;
     font: 500 17px/1.4 "JetBrains Mono"; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -76,7 +80,7 @@ const page = (eyebrow, lead, accent, host) => `<!doctype html><html><head><meta 
   .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 12px; background: #2F5BFF; }
 </style></head><body>
   <div class="copy">
-    <div class="brand">${mark}Mihailo Builds</div>
+    <div class="brand">${mark}<span>Northlane <span class="light">Studio</span></span><span class="demo">Web Studio Demo</span></div>
     <p class="eyebrow">${eyebrow}</p>
     <h1>${lead} <span class="accent">${accent}</span></h1>
     <p class="host">${host}</p>
@@ -88,8 +92,8 @@ const page = (eyebrow, lead, accent, host) => `<!doctype html><html><head><meta 
 const browser = await launchChromium();
 const ctx = await browser.newContext({ viewport: { width: 1200, height: 630 } });
 const tab = await ctx.newPage();
-for (const [locale, file] of [["en", "dist/index.html"]]) {
-  const html = read(file).toString();
+{
+  const html = read("dist/index.html").toString();
   const eyebrow = text(html, /class="hero__copy"><p class="eyebrow">(.*?)<\/p>/);
   const lead = text(html, /class="hero__title">(.*?)<span class="accent">/);
   const accent = text(html, /<span class="accent">(.*?)<\/span>/);
@@ -97,7 +101,7 @@ for (const [locale, file] of [["en", "dist/index.html"]]) {
   await tab.setContent(page(eyebrow, lead, accent, host), { waitUntil: "load" });
   await tab.evaluate(() => document.fonts.ready);
   const shot = await tab.screenshot({ type: "png" });
-  await sharp(shot).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(join(PUBLIC, `og-${locale}.png`));
-  log(`og-${locale}.png`);
+  await sharp(shot).png({ compressionLevel: 9, palette: true, quality: 95 }).toFile(join(PUBLIC, "og.png"));
+  log("og.png");
 }
 await browser.close();

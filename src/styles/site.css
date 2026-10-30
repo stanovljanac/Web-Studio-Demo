@@ -1,5 +1,5 @@
 /* ============================================================
-   MihailoBuilds — page layout & section styles.
+   Northlane Studio — page layout & section styles.
    Colours, fonts, radii and shadows come from the tokens (src/styles/tokens/).
    ============================================================ */
 
@@ -109,13 +109,14 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 .offer-bar__see { text-decoration: underline; text-underline-offset: 3px; }
 .offer-bar__cta svg { width: 15px; height: 15px; }
 
-/* --- Logo (MB monogram) ----------------------------------- */
+/* --- Logo (Northlane compass mark) ------------------------ */
 .logo { display: inline-flex; align-items: center; gap: 12px; }
 .logo-mark { flex: none; display: block; }
-.logo-mark__tile { fill: var(--ink); }
-.logo-mark__bar { fill: var(--accent); }
-.logo-mark__letters { fill: var(--on-ink); }
+.logo-mark__disc { fill: var(--accent); }
+.logo-mark__north, .logo-mark__south { fill: var(--on-accent); }
+.logo-mark__south { fill-opacity: 0.45; }
 .logo__word { font: 800 1.125rem/1 var(--font-display); letter-spacing: -0.02em; white-space: nowrap; }
+.logo__word-light { font-weight: var(--fw-medium); }
 .nav__links { display: flex; gap: 28px; margin-left: auto; }
 .nav__link { font: var(--type-label); color: var(--text-secondary); white-space: nowrap; transition: color var(--dur-fast); }
 .nav__link:hover { color: var(--text-primary); }
@@ -381,8 +382,6 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
   padding: var(--space-8) 0; border-top: 1px solid var(--on-ink-line);
 }
 .footer__brand .logo { color: var(--on-ink); }
-.footer .logo-mark__tile { fill: var(--on-ink); }
-.footer .logo-mark__letters { fill: var(--ink); }
 .footer__brand p { margin-top: var(--space-3); max-width: 280px; font: var(--fw-regular) var(--text-sm)/1.5 var(--font-sans); color: var(--on-ink-muted); }
 .footer__heading {
   margin-bottom: 4px; font: var(--fw-medium) var(--text-xs)/1.4 var(--font-mono);
