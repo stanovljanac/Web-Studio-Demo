@@ -2,7 +2,7 @@ import { Reveal } from "./Reveal";
 import { useT } from "../i18n";
 
 /* The studio and what it stands for. No portrait: Northlane is a studio,
-   not a person. The QA card is highlighted. */
+   not a person. The last card is highlighted. */
 export function About() {
   const a = useT().about;
   return (
@@ -21,7 +21,7 @@ export function About() {
         </Reveal>
         <Reveal as="ul" delay={80} className="about__values">
           {a.values.map((v) => (
-            <li key={v.title} className={"value-card" + (v.qa ? " value-card--qa" : "")}>
+            <li key={v.title} className={"value-card" + (v.highlight ? " value-card--highlight" : "")}>
               <h3 className="value-card__title">{v.title}</h3>
               <p className="value-card__text">{v.text}</p>
             </li>

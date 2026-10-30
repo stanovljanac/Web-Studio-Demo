@@ -1,7 +1,8 @@
 import { Button } from "../ds";
 import { ArrowIcon } from "./icons";
 import { ContactLink } from "./Email";
-import { Logo } from "./Logo";
+import { Logo, MbMark } from "./Logo";
+import { CREDIT_URL } from "./DemoNotice";
 import { DemoText } from "./DemoValue";
 import { OFFER } from "../data/pricing";
 import { PATHS, sectionHref, usePage } from "../i18n";
@@ -49,11 +50,20 @@ export function Footer() {
           </div>
         </div>
       </div>
+      {/* The studio's line on the left, who made the demo on the right. */}
       <div className="container footer__bottom">
-        <span>
-          <DemoText text={t.footer.copy} />
-        </span>
-        <a href={PATHS.privacy}>{t.footer.privacy}</a>
+        <div className="footer__legal">
+          <span>
+            <DemoText text={t.footer.copy} />
+          </span>
+          <a href={PATHS.privacy}>{t.footer.privacy}</a>
+        </div>
+        <a className="footer__credit" href={CREDIT_URL} target="_blank" rel="noopener noreferrer">
+          {t.footer.credit}
+          <MbMark size={22} />
+          <b>{t.footer.creditName}</b>
+          <span className="sr-only"> {t.demo.newTab}</span>
+        </a>
       </div>
     </footer>
   );

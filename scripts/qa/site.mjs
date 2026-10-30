@@ -1,8 +1,8 @@
 /* Behaviour checks:
    - content visible without JavaScript (prerender + <noscript>)
    - reduced motion shows every section
-   - demo notice: opens once on a first visit with focus inside, keeps focus
-     inside, closes with Esc, stays closed after a reload, the pill reopens it
+   - demo notice: opens on load with focus inside, keeps focus inside,
+     closes with Esc, opens again after a reload, the pill reopens it
    - keyboard: FAQ toggles, anchor lands below the fixed nav
    - links: internal 200s, anchors exist, external links open safely and
      answer with 2xx (HEAD, then GET for servers that refuse HEAD). A dead
@@ -57,9 +57,10 @@ const b = await launch();
   await page.keyboard.press("Escape");
   const afterEsc = await state();
   await page.reload({ waitUntil: "networkidle" });
-  await page.waitForTimeout(1000); // time to hydrate, so a wrong reopen would show
+  await page.waitForSelector(".demo-notice[open]", { timeout: 5000 }).catch(() => {});
   const afterReload = await state();
-  await page.click(".demo-pill--corner");
+  await page.keyboard.press("Escape");
+  await page.click(".demo-pill");
   const pill = await state();
   // Empty space inside the card keeps it open; the backdrop around it closes it.
   const box = await page.locator(".demo-notice").boundingBox();
@@ -67,10 +68,10 @@ const b = await launch();
   const padding = await state();
   await page.mouse.click(5, 450);
   const backdrop = await state();
-  await page.click(".demo-pill--corner");
+  await page.click(".demo-pill");
   await page.click(".demo-notice__close");
   const closed = await state();
-  log(`demo notice: first visit open ${first.open}, focus inside ${first.inside} | Tab reached the page ${escaped}/8 | Esc closes ${!afterEsc.open} | after reload open ${afterReload.open} | pill reopens ${pill.open} | click in the card keeps it open ${padding.open} | backdrop closes ${!backdrop.open} | button closes ${!closed.open}`);
+  log(`demo notice: on load open ${first.open}, focus inside ${first.inside} | Tab reached the page ${escaped}/8 | Esc closes ${!afterEsc.open} | after reload open again ${afterReload.open} | pill reopens ${pill.open} | click in the card keeps it open ${padding.open} | backdrop closes ${!backdrop.open} | button closes ${!closed.open}`);
   await ctx.close();
 }
 

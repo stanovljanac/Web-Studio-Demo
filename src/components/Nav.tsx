@@ -36,7 +36,7 @@ export function Nav() {
         <a className="nav__logo" href={PATHS.home} aria-label={t.nav.home}>
           <Logo />
         </a>
-        <DemoPill inNav />
+        <DemoPill />
         <nav className="nav__links" aria-label={t.nav.label}>
           <a className="nav__link" href={href("work")}>
             {t.nav.work}

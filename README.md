@@ -14,7 +14,7 @@ Live: https://demostudio.mihailobuilds.com/
 | The contact form: it validates, then says nothing was sent | |
 | The privacy policy (a sample) | |
 
-The site collects nothing: the form makes no request, and there are no cookies or analytics. A notice on the first visit, a "Web Studio Demo" pill and a no-JS bar say all of this on the page itself.
+The site collects nothing: the form makes no request, and there are no cookies or analytics. A notice on every page load, a "Web Studio Demo" pill in the nav and a no-JS bar say all of this on the page itself; the footer credits Mihailo Builds.
 
 ## Stack
 

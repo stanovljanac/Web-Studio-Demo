@@ -54,9 +54,22 @@ export async function launchChromium() {
    (fonts are self-hosted), so this only matters for external links. */
 export async function newContext(browser, { showDemoNotice = false, ...opts } = {}) {
   const ctx = await browser.newContext({ ignoreHTTPSErrors: true, ...opts });
-  /* The demo notice opens on a first visit and makes the page inert. The
-     checks run as a returning visitor, except the ones about the notice. */
-  if (!showDemoNotice) await ctx.addInitScript(() => { try { localStorage.setItem("demo-notice-v1", "1"); } catch {} });
+  /* The demo notice opens on every page load and makes the page inert. The
+     checks skip that first, automatic showModal() on each page, except the
+     ones about the notice; the pill and the contact links still open it. */
+  if (!showDemoNotice) {
+    await ctx.addInitScript(() => {
+      const show = HTMLDialogElement.prototype.showModal;
+      let skipped = false;
+      HTMLDialogElement.prototype.showModal = function () {
+        if (!skipped && this.classList.contains("demo-notice")) {
+          skipped = true;
+          return;
+        }
+        return show.call(this);
+      };
+    });
+  }
   return ctx;
 }
 
