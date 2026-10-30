@@ -39,7 +39,7 @@ const WIDTHS = { desktop: [640, 960, 1280, 1600], mobile: [300, 450, 600, 810] }
    The salon's hero is not used on the cards: the phone in our own hero shows it. */
 const SITES = {
   "mb-hair-salon": {
-    url: "https://mbhairsalon.mihailobuilds.com/",
+    url: "https://demohairsalon.mihailobuilds.com/",
     frames: { top: null, services: "#services", stylists: "#stylists", gallery: "#gallery", book: "#book", visit: "#visit" },
   },
   keeper: { url: "https://keeper.mihailobuilds.com/", frames: { top: null } },

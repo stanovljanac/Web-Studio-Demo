@@ -2,7 +2,9 @@
    - content visible without JavaScript (prerender + <noscript>)
    - reduced motion shows every section
    - keyboard: FAQ toggles, anchor lands below the fixed nav
-   - links: internal 200s, anchors exist, external links open safely */
+   - links: internal 200s, anchors exist, external links open safely and
+     answer with 2xx (HEAD, then GET for servers that refuse HEAD). A dead
+     project link fails the run (exit code 1). */
 import { BASE, launch, log, newContext } from "./_lib.mjs";
 
 const b = await launch();
@@ -55,9 +57,25 @@ const b = await launch();
   await ctx.close();
 }
 
+/* Status of an external URL after redirects, or the network error. */
+async function externalStatus(url) {
+  let last = "";
+  for (const method of ["HEAD", "GET"]) {
+    try {
+      const res = await fetch(url, { method, redirect: "follow", signal: AbortSignal.timeout(15000) });
+      if (res.ok) return String(res.status);
+      last = String(res.status);
+    } catch (e) {
+      last = e.cause?.code || e.name;
+    }
+  }
+  return "FAIL " + last;
+}
+
 {
   const ctx = await newContext(b);
   const page = await ctx.newPage();
+  const external = new Set();
   for (const path of ["/", "/privacy/"]) {
     await page.goto(BASE + path, { waitUntil: "networkidle" });
     const links = await page.$$eval("a[href]", (as) => as.map((a) => ({ href: a.getAttribute("href"), target: a.target, rel: a.rel })));
@@ -69,8 +87,16 @@ const b = await launch();
     const extBad = links.filter((l) => /^https?:/.test(l.href) && (l.target !== "_blank" || !l.rel.includes("noopener")));
     const missing = [];
     for (const h of new Set(links.map((l) => l.href).filter((h) => h.startsWith("#")))) if (!(await page.$(h))) missing.push(h);
+    links.filter((l) => /^https?:/.test(l.href)).forEach((l) => external.add(l.href));
     log(`${path}: ${links.length} links | internal not 200: ${bad.length ? bad : "none"} | external w/o _blank+noopener: ${extBad.length ? JSON.stringify(extBad) : "none"} | missing anchors: ${missing.length ? missing : "none"}`);
   }
   await ctx.close();
+  const dead = [];
+  for (const url of external) {
+    const status = await externalStatus(url);
+    if (status.startsWith("FAIL")) dead.push(`${url} ${status}`);
+  }
+  log(`external links: ${external.size} checked | dead: ${dead.length ? dead.join(", ") : "none"}`);
+  if (dead.length) process.exitCode = 1;
 }
 await b.close();
