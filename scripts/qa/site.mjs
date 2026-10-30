@@ -1,7 +1,7 @@
 /* Behaviour checks:
    - content visible without JavaScript (prerender + <noscript>)
    - reduced motion shows every section
-   - keyboard: FAQ toggles, anchor lands below the fixed nav, language switch
+   - keyboard: FAQ toggles, anchor lands below the fixed nav
    - links: internal 200s, anchors exist, external links open safely */
 import { BASE, launch, log, newContext } from "./_lib.mjs";
 
@@ -10,7 +10,7 @@ const b = await launch();
 {
   const ctx = await newContext(b, { javaScriptEnabled: false, viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
-  for (const path of ["/", "/sr/privatnost/"]) {
+  for (const path of ["/", "/privacy/"]) {
     await page.goto(BASE + path, { waitUntil: "load" });
     const r = await page.evaluate(() => ({
       h1: document.querySelector("h1")?.textContent?.trim().slice(0, 40),
@@ -50,11 +50,6 @@ const b = await launch();
   await page.waitForTimeout(1200);
   const top = await page.evaluate(() => [document.querySelector("#services").getBoundingClientRect().top, document.querySelector(".nav").getBoundingClientRect().height]);
   log(`#services top after nav click: ${Math.round(top[0])}px (nav ${Math.round(top[1])}px)`);
-  log("lang switch active:", await page.$eval(".nav .lang-switch__opt.is-active", (a) => a.getAttribute("aria-current") + " " + a.textContent));
-  await page.click(".nav .lang-switch__opt:not(.is-active)"); await page.waitForLoadState();
-  log("lang switch →", page.url(), await page.evaluate(() => document.documentElement.lang));
-  await page.goto(BASE + "/sr/privatnost/"); await page.click(".nav .lang-switch__opt:not(.is-active)"); await page.waitForLoadState();
-  log("privacy lang switch →", page.url());
   await page.goto(BASE + "/", { waitUntil: "networkidle" });
   log("honeypot visible:", await page.isVisible("input[name=botcheck]"));
   await ctx.close();
@@ -63,7 +58,7 @@ const b = await launch();
 {
   const ctx = await newContext(b);
   const page = await ctx.newPage();
-  for (const path of ["/", "/sr/", "/privacy/", "/sr/privatnost/"]) {
+  for (const path of ["/", "/privacy/"]) {
     await page.goto(BASE + path, { waitUntil: "networkidle" });
     const links = await page.$$eval("a[href]", (as) => as.map((a) => ({ href: a.getAttribute("href"), target: a.target, rel: a.rel })));
     const bad = [];

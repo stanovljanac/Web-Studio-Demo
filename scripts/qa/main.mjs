@@ -1,5 +1,5 @@
 /* Main QA pass:
-   - CLS, horizontal overflow and console errors at 320 / 375 / 1440 px, on all four pages
+   - CLS, horizontal overflow and console errors at 320 / 375 / 1440 px, on both pages
    - CLS again with the web fonts delayed by 1.5 s (as on a slow connection),
      so the metric-matched fallbacks are what the first paint uses
    - nothing is loaded from Google (the fonts are self-hosted)
@@ -42,7 +42,7 @@ for (const slowFonts of [false, true]) {
 /* .page clips horizontal overflow, so a nav item pushed off screen does not
    show up as a scrollbar above: check that every nav element is inside the viewport. */
 log("\n--- nav fits the viewport (320–1280 px): nothing outside, no link on two lines, offer bar text not cut off");
-for (const path of ["/", "/sr/"]) {
+for (const path of ["/"]) {
   const bad = [];
   for (const w of [320, 360, 390, 430, 480, 540, 600, 640, 768, 900, 901, 1024, 1180, 1181, 1280]) {
     const ctx = await newContext(b, { viewport: { width: w, height: 800 } });
@@ -118,7 +118,7 @@ log("\n--- contrast (lowest ratios of small text) + focus");
   const res = await p.evaluate(() => {
     const lum = (c) => { const [r, g, b] = c.match(/[\d.]+/g).slice(0, 3).map(Number).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
     const bgOf = (el) => { for (let e = el; e; e = e.parentElement) { const c = getComputedStyle(e).backgroundColor; const a = c.match(/[\d.]+/g); if (a && (a.length < 4 || +a[3] > 0.5)) return c; } return "rgb(255,255,255)"; };
-    const sels = [".eyebrow", ".section__lede", ".work-card__label", ".work-card__desc", ".svc-note", ".steps__note", ".split__note", ".contact__privacy", ".contact__channels small", ".audience__text", ".audience__num", ".footer__links a", ".footer__meta span", ".footer__heading", ".footer__offer", ".footer__bottom span", ".offer-bar__text", ".nav__link", ".lang-switch__opt:not(.is-active)", ".offer__note", ".offer__text", ".offer .eyebrow", ".svc-card__price", ".step__num", ".hero__lede"];
+    const sels = [".eyebrow", ".section__lede", ".work-card__label", ".work-card__desc", ".svc-note", ".steps__note", ".split__note", ".contact__privacy", ".contact__channels small", ".audience__text", ".audience__num", ".footer__links a", ".footer__meta span", ".footer__heading", ".footer__offer", ".footer__bottom span", ".offer-bar__text", ".nav__link", ".offer__note", ".offer__text", ".offer .eyebrow", ".svc-card__price", ".step__num", ".hero__lede"];
     const worst = {};
     for (const s of sels) for (const el of document.querySelectorAll(s)) {
       if (!el.getClientRects().length) continue; // hidden (display: none)

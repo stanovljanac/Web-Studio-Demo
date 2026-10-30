@@ -4,7 +4,7 @@
    a local install, or the global npm folder, in that order. */
 import { execSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -12,7 +12,7 @@ export const BASE = process.env.QA_BASE || "http://localhost:4173";
 export const OUT = resolve(process.env.QA_OUT || join(ROOT, ".qa"));
 mkdirSync(OUT, { recursive: true });
 
-export const PAGES = ["/", "/sr/", "/privacy/", "/sr/privatnost/"];
+export const PAGES = ["/", "/privacy/"];
 export const log = (...a) => console.log(...a);
 
 export async function launch() {
@@ -33,7 +33,7 @@ export async function launchChromium() {
   let pw;
   for (const c of candidates.filter(Boolean)) {
     try {
-      const m = await import(c.startsWith("/") ? pathToFileURL(c).href : c);
+      const m = await import(isAbsolute(c) ? pathToFileURL(c).href : c);
       pw = m.default ?? m;
       break;
     } catch {}

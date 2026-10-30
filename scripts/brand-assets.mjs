@@ -4,7 +4,7 @@
 
    - public/favicon.ico (16, 32, 48 px) and public/apple-touch-icon.png
      (180 px), from public/favicon.svg
-   - public/og-en.png and public/og-sr.png (1200×630), the social preview:
+   - public/og-en.png (1200×630), the social preview:
      the hero of the built page (eyebrow, title, accent) next to the phone
      with the salon screenshot, set in the site's own fonts and colours.
      The copy is read from dist/, so it always matches the site; run the
@@ -88,7 +88,7 @@ const page = (eyebrow, lead, accent, host) => `<!doctype html><html><head><meta 
 const browser = await launchChromium();
 const ctx = await browser.newContext({ viewport: { width: 1200, height: 630 } });
 const tab = await ctx.newPage();
-for (const [locale, file] of [["en", "dist/index.html"], ["sr", "dist/sr/index.html"]]) {
+for (const [locale, file] of [["en", "dist/index.html"]]) {
   const html = read(file).toString();
   const eyebrow = text(html, /class="hero__copy"><p class="eyebrow">(.*?)<\/p>/);
   const lead = text(html, /class="hero__title">(.*?)<span class="accent">/);

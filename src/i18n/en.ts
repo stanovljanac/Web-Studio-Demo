@@ -1,7 +1,7 @@
 import { OFFER, PRICING } from "../data/pricing";
-import type { Dict } from "./sr";
 
-export const en: Dict = {
+/* All copy on the site. The shape of this object is the Dict type. */
+export const en = {
   skip: "Skip to content",
 
   nav: {
@@ -12,7 +12,6 @@ export const en: Dict = {
     process: "Process",
     faq: "FAQ",
     cta: "Start a project",
-    langLabel: "Language",
   },
 
   /* Links to the special offer (#offer): the bar above the nav and the footer reminder. */
@@ -305,3 +304,5 @@ export const en: Dict = {
     ],
   },
 };
+
+export type Dict = typeof en;

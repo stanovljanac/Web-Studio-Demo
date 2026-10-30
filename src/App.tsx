@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
-import { DICTS, LocaleContext, type Locale, type Page } from "./i18n";
+import { PageContext, type Page } from "./i18n";
+import { en } from "./i18n/en";
 import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { Audience } from "./components/Audience";
@@ -13,10 +14,10 @@ import { Privacy } from "./components/Privacy";
 import { Footer } from "./components/Footer";
 import { OFFER } from "./data/pricing";
 
-export default function App({ locale, page }: { locale: Locale; page: Page }) {
-  const t = DICTS[locale];
+export default function App({ page }: { page: Page }) {
+  const t = en;
   return (
-    <LocaleContext.Provider value={{ locale, page, t }}>
+    <PageContext.Provider value={{ page, t }}>
       <div className={"page" + (OFFER.open ? " has-offer" : "")}>
         <a className="skip-link" href="#main">
           {t.skip}
@@ -41,6 +42,6 @@ export default function App({ locale, page }: { locale: Locale; page: Page }) {
         <Footer />
         <Analytics />
       </div>
-    </LocaleContext.Provider>
+    </PageContext.Provider>
   );
 }

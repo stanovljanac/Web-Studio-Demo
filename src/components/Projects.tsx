@@ -1,7 +1,7 @@
 import { ExternalIcon } from "./icons";
 import { Reveal } from "./Reveal";
 import { PROJECTS, type Project } from "../data/projects";
-import { useLocale } from "../i18n";
+import { useT } from "../i18n";
 
 /* `sizes` for the screenshots: the browser frame is the card's wider column
    (3/5) minus its padding, or the full card once it stacks (≤ 900px).
@@ -10,7 +10,7 @@ const SHOT_SIZES = "(max-width: 640px) calc(100vw - 68px), (max-width: 900px) ca
 const PHONE_SIZES = "(max-width: 640px) 84px, (max-width: 900px) 110px, 134px";
 
 function ProjectCard({ p, flip }: { p: Project; flip: boolean }) {
-  const { locale, t } = useLocale();
+  const t = useT();
   const domain = new URL(p.url).host;
   return (
     <article className={"work-card" + (p.featured ? " work-card--featured" : "") + (flip ? " work-card--flip" : "")}>
@@ -46,9 +46,9 @@ function ProjectCard({ p, flip }: { p: Project; flip: boolean }) {
         ) : null}
       </div>
       <div className="work-card__body">
-        <p className="work-card__label">{p.label[locale]}</p>
+        <p className="work-card__label">{p.label}</p>
         <h3 className="work-card__name">{p.name}</h3>
-        <p className="work-card__desc">{p.desc[locale]}</p>
+        <p className="work-card__desc">{p.desc}</p>
         <a className="work-card__link" href={p.url} target="_blank" rel="noopener noreferrer">
           {t.work.visit}
           <span className="sr-only">
@@ -63,7 +63,7 @@ function ProjectCard({ p, flip }: { p: Project; flip: boolean }) {
 }
 
 export function Projects() {
-  const t = useLocale().t;
+  const t = useT();
   return (
     <section id="work" className="section section--rule" aria-labelledby="work-title">
       <div className="container">

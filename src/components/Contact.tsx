@@ -4,7 +4,7 @@ import { Button, Input, Textarea } from "../ds";
 import { ArrowIcon, CheckIcon, MailIcon, MessageIcon } from "./icons";
 import { Reveal } from "./Reveal";
 import { ContactLink, WithEmail } from "./Email";
-import { PATHS, useLocale } from "../i18n";
+import { PATHS, useT } from "../i18n";
 
 /* ------------------------------------------------------------------
    Web3Forms — free, no-backend email delivery for static sites.
@@ -18,7 +18,7 @@ type Errors = { name?: string; email?: string; message?: string };
 type Status = "idle" | "submitting" | "success" | "error";
 
 export function Contact() {
-  const { locale, t } = useLocale();
+  const t = useT();
   const c = t.contact;
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
@@ -186,7 +186,7 @@ export function Contact() {
             </ul>
             <p className="contact__reply">{c.reply}</p>
             <p className="contact__privacy">
-              {c.privacyLead} <a href={PATHS[locale].privacy}>{c.privacyLink}</a>
+              {c.privacyLead} <a href={PATHS.privacy}>{c.privacyLink}</a>
             </p>
           </aside>
         </div>

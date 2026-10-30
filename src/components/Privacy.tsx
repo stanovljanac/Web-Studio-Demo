@@ -1,12 +1,12 @@
 import { WithEmail } from "./Email";
-import { PATHS, useLocale } from "../i18n";
+import { PATHS, useT } from "../i18n";
 
 export function Privacy() {
-  const { locale, t } = useLocale();
+  const t = useT();
   const p = t.privacy;
   return (
     <article className="container legal" aria-labelledby="privacy-title">
-      <a className="legal__back" href={PATHS[locale].home}>
+      <a className="legal__back" href={PATHS.home}>
         ← {p.back}
       </a>
       <h1 id="privacy-title" className="legal__title">

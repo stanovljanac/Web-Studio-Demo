@@ -1,14 +1,13 @@
 import { Button } from "../ds";
 import { ArrowIcon } from "./icons";
 import { ContactLink } from "./Email";
-import { LangSwitch } from "./LangSwitch";
 import { Logo } from "./Logo";
 import { OFFER } from "../data/pricing";
-import { PATHS, sectionHref, useLocale } from "../i18n";
+import { PATHS, sectionHref, usePage } from "../i18n";
 
 export function Footer() {
-  const { locale, page, t } = useLocale();
-  const href = (id: string) => sectionHref(locale, page, id);
+  const { page, t } = usePage();
+  const href = (id: string) => sectionHref(page, id);
   return (
     <footer className="footer">
       <div className="container footer__cta">
@@ -47,15 +46,11 @@ export function Footer() {
             <ContactLink kind="viber">{t.contact.viber}</ContactLink>
             <ContactLink kind="whatsapp">{t.contact.whatsapp}</ContactLink>
           </div>
-          <div className="footer__group">
-            <p className="footer__heading">{t.nav.langLabel}</p>
-            <LangSwitch />
-          </div>
         </div>
       </div>
       <div className="container footer__bottom">
         <span>{t.footer.copy}</span>
-        <a href={PATHS[locale].privacy}>{t.footer.privacy}</a>
+        <a href={PATHS.privacy}>{t.footer.privacy}</a>
       </div>
     </footer>
   );

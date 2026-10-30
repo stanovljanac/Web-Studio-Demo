@@ -17,7 +17,7 @@ async function fresh(path, route) {
   return { ctx, page, calls: () => calls, errs };
 }
 const errsText = p => p.$$eval(".mb-field__hint--error, .contact__error", els => els.map(e => e.textContent));
-for (const path of ["/", "/sr/"]) {
+for (const path of ["/"]) {
   if (mode === "nokey") {
     const { ctx, page } = await fresh(path);
     await page.click(".contact__form button[type=submit]");

@@ -120,22 +120,6 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 .nav__link { font: var(--type-label); color: var(--text-secondary); white-space: nowrap; transition: color var(--dur-fast); }
 .nav__link:hover { color: var(--text-primary); }
 .nav__actions { display: flex; align-items: center; gap: var(--space-3); }
-.nav__sep { width: 1px; height: 24px; margin: 0 var(--space-2); background: var(--border-strong); }
-
-/* --- Language switch (EN | SR) ---------------------------- */
-.lang-switch {
-  display: inline-flex; align-items: center; gap: 2px; padding: 3px;
-  background: var(--surface-1); border: 1px solid var(--border-default); border-radius: var(--radius-pill);
-}
-.lang-switch__opt {
-  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: var(--radius-pill);
-  font: var(--fw-medium) var(--text-xs)/1 var(--font-mono); letter-spacing: 0.06em; color: var(--text-muted);
-  transition: color var(--dur-fast), background var(--dur-fast);
-}
-.lang-switch__opt:hover { color: var(--text-primary); }
-.lang-switch__opt.is-active { background: var(--ink); color: var(--on-ink); }
-.lang-switch__opt:not(.is-active) .flag { opacity: 0.6; }
-.flag { flex: none; display: block; width: 18px; height: 12px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(26, 24, 19, 0.18); }
 
 /* --- Hero ------------------------------------------------- */
 .hero { padding: calc(148px + var(--bar-h)) 0 var(--space-11); background: var(--section-alt); }
@@ -409,10 +393,6 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 .footer__links a, .footer__group > a, .footer__bottom a { color: var(--on-ink-muted); transition: color var(--dur-fast); }
 .footer__links a:hover, .footer__group > a:hover, .footer__bottom a:hover { color: var(--on-ink); }
 
-.footer .lang-switch { background: transparent; border-color: var(--on-ink-line); }
-.footer .lang-switch__opt { color: var(--on-ink-muted); }
-.footer .lang-switch__opt:hover { color: var(--on-ink); }
-.footer .lang-switch__opt.is-active { background: var(--on-ink); color: var(--ink); }
 
 .footer > .footer__bottom {
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2) var(--space-6);
@@ -484,8 +464,6 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 /* Compact nav: the wordmark and language codes need ~540px next to the CTA. */
 @media (max-width: 600px) {
   .nav .logo__word { display: none; }
-  .nav .lang-switch__code { display: none; }
-  .nav .lang-switch__opt { padding: 7px 8px; }
 }
 @media (max-width: 360px) {
   .nav__actions .mb-btn__icon { display: none; }

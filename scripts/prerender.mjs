@@ -1,4 +1,4 @@
-// Prerenders the React app into the four built HTML pages, so every
+// Prerenders the React app into the two built HTML pages, so every
 // page ships its real content (not an empty <div id="root">).
 // Runs after `vite build` and `vite build --ssr src/entry-server.tsx`.
 import fs from "node:fs";
@@ -16,10 +16,8 @@ const ssrDir = path.join(root, "dist-ssr");
 const { render, themeColor } = await import(pathToFileURL(path.join(ssrDir, "entry-server.js")).href);
 
 const PAGES = [
-  { file: "index.html", locale: "en", page: "home" },
-  { file: "sr/index.html", locale: "sr", page: "home" },
-  { file: "privacy/index.html", locale: "en", page: "privacy" },
-  { file: "sr/privatnost/index.html", locale: "sr", page: "privacy" },
+  { file: "index.html", page: "home" },
+  { file: "privacy/index.html", page: "privacy" },
 ];
 
 for (const p of PAGES) {
@@ -27,7 +25,7 @@ for (const p of PAGES) {
   const html = fs.readFileSync(file, "utf8");
   if (!html.includes("<!--app-html-->")) throw new Error(`Missing <!--app-html--> in ${p.file}`);
   const out = html
-    .replace("<!--app-html-->", render(p.locale, p.page))
+    .replace("<!--app-html-->", render(p.page))
     .replaceAll("__SITE_URL__", SITE_URL)
     .replaceAll("__THEME_COLOR__", themeColor);
   fs.writeFileSync(file, out);

@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { contactHref, type ContactKind } from "../data/contact";
-import { sectionHref, useLocale } from "../i18n";
+import { sectionHref, usePage, useT } from "../i18n";
 
 /* A link to email / Viber / WhatsApp that shows no address or number.
    Its href points to the contact form; the real address is set only when
@@ -15,7 +15,7 @@ export function ContactLink({
   className?: string;
   children: ReactNode;
 }) {
-  const { locale, page } = useLocale();
+  const { page } = usePage();
   const reveal = (e: MouseEvent<HTMLAnchorElement>) => {
     const a = e.currentTarget;
     a.href = contactHref(kind);
@@ -25,7 +25,7 @@ export function ContactLink({
     }
   };
   return (
-    <a href={sectionHref(locale, page, "contact")} className={className} onClick={reveal} onAuxClick={reveal}>
+    <a href={sectionHref(page, "contact")} className={className} onClick={reveal} onAuxClick={reveal}>
       {children}
     </a>
   );
@@ -33,7 +33,7 @@ export function ContactLink({
 
 /* Renders a dictionary string, replacing every "{email}" with an email link. */
 export function WithEmail({ text }: { text: string }) {
-  const { t } = useLocale();
+  const t = useT();
   const parts = text.split("{email}");
   return (
     <>

@@ -1,15 +1,14 @@
 import { Button } from "../ds";
 import { ArrowIcon } from "./icons";
 import { useScrolled } from "../hooks/useScrolled";
-import { LangSwitch } from "./LangSwitch";
 import { Logo } from "./Logo";
 import { OFFER } from "../data/pricing";
-import { PATHS, sectionHref, useLocale } from "../i18n";
+import { PATHS, sectionHref, usePage } from "../i18n";
 
 export function Nav() {
-  const { locale, page, t } = useLocale();
+  const { page, t } = usePage();
   const scrolled = useScrolled();
-  const href = (id: string) => sectionHref(locale, page, id);
+  const href = (id: string) => sectionHref(page, id);
 
   return (
     <header className={"nav" + (scrolled ? " is-scrolled" : "")}>
@@ -27,7 +26,7 @@ export function Nav() {
         </a>
       ) : null}
       <div className="nav__inner">
-        <a className="nav__logo" href={PATHS[locale].home} aria-label={t.nav.home}>
+        <a className="nav__logo" href={PATHS.home} aria-label={t.nav.home}>
           <Logo />
         </a>
         <nav className="nav__links" aria-label={t.nav.label}>
@@ -45,8 +44,6 @@ export function Nav() {
           </a>
         </nav>
         <div className="nav__actions">
-          <span className="nav__sep" aria-hidden="true" />
-          <LangSwitch />
           <Button as="a" href={href("contact")} variant="primary" size="sm" trailingIcon={<ArrowIcon />}>
             {t.nav.cta}
           </Button>

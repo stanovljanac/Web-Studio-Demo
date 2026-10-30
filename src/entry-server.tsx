@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { renderToString } from "react-dom/server";
 import App from "./App";
 import { OFFER } from "./data/pricing";
-import type { Locale, Page } from "./i18n";
+import type { Page } from "./i18n";
 
 /* Used only at build time by scripts/prerender.mjs. */
 
@@ -11,10 +11,10 @@ import type { Locale, Page } from "./i18n";
    open, otherwise the page background. */
 export const themeColor = OFFER.open ? "#2F5BFF" : "#FFFFFF";
 
-export function render(locale: Locale, page: Page): string {
+export function render(page: Page): string {
   return renderToString(
     <StrictMode>
-      <App locale={locale} page={page} />
+      <App page={page} />
     </StrictMode>,
   );
 }

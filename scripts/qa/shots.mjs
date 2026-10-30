@@ -1,11 +1,11 @@
 /* Screenshots for visual review, saved to .qa/ (git-ignored).
-   node scripts/qa/shots.mjs [pages=/,/sr/] [widths=375,1440] [slice=1300] [dpr=1] [viewport=1]
+   node scripts/qa/shots.mjs [pages=/,/privacy/] [widths=375,1440] [slice=1300] [dpr=1] [viewport=1]
      slice=N     also cut the full page into N-px tall parts (easier to read than one long image)
      viewport=1  only the first screen instead of the full page */
 import { BASE, OUT, launch, log, newContext, scrollThrough, shotName } from "./_lib.mjs";
 
 const arg = Object.fromEntries(process.argv.slice(2).map((a) => a.split("=")));
-const pages = (arg.pages || "/,/sr/").split(",");
+const pages = (arg.pages || "/,/privacy/").split(",");
 const widths = (arg.widths || "375,1440").split(",").map(Number);
 const slice = Number(arg.slice || 0);
 const dpr = Number(arg.dpr || 1);
