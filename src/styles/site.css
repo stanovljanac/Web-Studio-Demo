@@ -37,6 +37,18 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
+/* --- Demo values ------------------------------------------ */
+/* A placeholder price or number ({{X}} in the copy, <DemoValue>): a dashed
+   mono chip, so it reads as intentional. On dark or accent bands it takes
+   the surrounding text colour. */
+.demo-value {
+  padding: 0 0.28em; margin: 0 0.04em; border: 1px dashed var(--accent-line); border-radius: var(--radius-xs);
+  background: var(--accent-soft); color: var(--accent-text);
+  font-family: var(--font-mono); font-weight: var(--fw-medium); font-size: 0.86em; letter-spacing: 0; text-transform: none;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; cursor: help;
+}
+.offer-bar .demo-value, .offer .demo-value, .footer .demo-value { background: transparent; color: inherit; border-color: currentColor; }
+
 /* --- Section primitives ----------------------------------- */
 .section { padding: var(--space-11) 0; }
 .section--rule { border-top: var(--section-rule); }
@@ -246,6 +258,7 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 .svc-card__price { font: 800 1.625rem/1.1 var(--font-display); letter-spacing: -0.035em; color: var(--accent-text); }
 .svc-card__desc { font: var(--fw-regular) 0.9375rem/1.6 var(--font-sans); color: var(--text-secondary); }
 .svc-note { margin-top: var(--space-4); font: var(--type-label); font-weight: 400; color: var(--text-muted); }
+.svc-note + .svc-note { margin-top: var(--space-1); }
 
 .svc-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-8); }
 .svc-box { padding: var(--space-6); background: var(--surface-2); border: var(--card-border); border-radius: var(--radius-lg); }
@@ -295,13 +308,13 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 .own__text { margin-top: var(--space-3); font: var(--fw-regular) 1.0625rem/1.6 var(--font-sans); color: var(--text-secondary); }
 
 /* --- About ------------------------------------------------ */
-.about { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-9); align-items: center; }
-.about__photo { aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radius-xl); background: var(--surface-2); border: var(--card-border); }
-.about__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--space-9); align-items: center; }
 .about__para { margin-top: var(--space-4); max-width: 560px; font: var(--fw-regular) var(--text-md)/1.65 var(--font-sans); color: var(--text-secondary); }
-.qa-card { margin-top: var(--space-6); padding: var(--space-5); border-radius: var(--radius-lg); background: var(--surface-1); border: var(--card-border); }
-.qa-card__title { margin-bottom: var(--space-2); font: var(--fw-semibold) 1.0625rem/1.3 var(--font-display); }
-.qa-card__text { font: var(--fw-regular) 0.9375rem/1.6 var(--font-sans); color: var(--text-secondary); }
+.about__values { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+.value-card { padding: var(--space-5); border-radius: var(--radius-lg); background: var(--surface-1); border: var(--card-border); }
+.value-card--qa { background: var(--accent-soft); border-color: var(--accent-line); }
+.value-card__title { margin-bottom: var(--space-2); font: var(--fw-semibold) 1.0625rem/1.3 var(--font-display); }
+.value-card__text { font: var(--fw-regular) 0.9375rem/1.6 var(--font-sans); color: var(--text-secondary); }
 
 /* --- FAQ -------------------------------------------------- */
 .faq { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-9); align-items: start; }
@@ -354,7 +367,8 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
 .legal__back { font: var(--type-label); color: var(--text-secondary); }
 .legal__back:hover { color: var(--text-primary); }
 .legal__title { margin: var(--space-6) 0 var(--space-2); font: 800 clamp(2rem, 1.5rem + 2vw, 3rem)/1.1 var(--font-display); letter-spacing: -0.035em; }
-.legal__updated { margin-bottom: var(--space-7); font: var(--type-label); font-weight: 400; color: var(--text-muted); }
+.legal__updated { margin-bottom: var(--space-6); font: var(--type-label); font-weight: 400; color: var(--text-muted); }
+.legal__note { padding: var(--space-5); border-radius: var(--radius-lg); background: var(--accent-soft); border: 1px solid var(--accent-line); font: var(--fw-regular) 0.9375rem/1.65 var(--font-sans); color: var(--text-primary); }
 .legal__section { margin-top: var(--space-7); }
 .legal__section h2 { margin-bottom: var(--space-3); font: var(--fw-semibold) 1.25rem/1.3 var(--font-display); }
 .legal__section p { margin-top: var(--space-3); font: var(--fw-regular) 1rem/1.7 var(--font-sans); color: var(--text-secondary); }
@@ -443,7 +457,6 @@ section[id], #main, #offer { scroll-margin-top: calc(76px + var(--bar-h)); }
   .hero__grid { grid-template-columns: 1fr; gap: var(--space-8); }
   .phone { width: min(230px, 62vw); }
   .about { grid-template-columns: 1fr; }
-  .about__photo { max-width: 360px; }
   .footer > .container { width: calc(100% - 2 * var(--space-4)); }
   .nav__inner { gap: var(--space-3); }
   .audience, .contact__row { grid-template-columns: 1fr; }

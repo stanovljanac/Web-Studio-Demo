@@ -4,6 +4,7 @@ import { Button, Input, Textarea } from "../ds";
 import { ArrowIcon, CheckIcon, MailIcon, MessageIcon } from "./icons";
 import { Reveal } from "./Reveal";
 import { ContactLink, WithEmail } from "./Email";
+import { DemoText } from "./DemoValue";
 import { PATHS, useT } from "../i18n";
 
 /* ------------------------------------------------------------------
@@ -64,7 +65,7 @@ export function Contact() {
     try {
       data.append("access_key", WEB3FORMS_ACCESS_KEY);
       data.append("subject", c.subject);
-      data.append("from_name", "MihailoBuilds website");
+      data.append("from_name", "Northlane Studio demo");
 
       const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
       const json = await res.json();
@@ -145,7 +146,9 @@ export function Contact() {
                   <CheckIcon aria-hidden="true" />
                 </div>
                 <h3>{c.successTitle}</h3>
-                <p>{c.successText}</p>
+                <p>
+                  <DemoText text={c.successText} />
+                </p>
                 <Button variant="secondary" onClick={() => setStatus("idle")}>
                   {c.sendAnother}
                 </Button>
@@ -184,7 +187,9 @@ export function Contact() {
                 </ContactLink>
               </li>
             </ul>
-            <p className="contact__reply">{c.reply}</p>
+            <p className="contact__reply">
+              <DemoText text={c.reply} />
+            </p>
             <p className="contact__privacy">
               {c.privacyLead} <a href={PATHS.privacy}>{c.privacyLink}</a>
             </p>

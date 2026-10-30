@@ -1,12 +1,13 @@
-import { OFFER, PRICING } from "../data/pricing";
+import { OFFER, PRICING, TERMS } from "../data/pricing";
 
-/* All copy on the site. The shape of this object is the Dict type. */
+/* All copy on the site. The shape of this object is the Dict type.
+   Northlane Studio is fictional; {{X}} marks a placeholder value. */
 export const en = {
   skip: "Skip to content",
 
   nav: {
     label: "Main navigation",
-    home: "MihailoBuilds — home",
+    home: "Northlane Studio — home",
     work: "Work",
     services: "Services",
     process: "Process",
@@ -16,8 +17,8 @@ export const en = {
 
   /* Links to the special offer (#offer): the bar above the nav and the footer reminder. */
   offerCta: {
-    bar: "the next 3 client projects at a lower price.",
-    barShort: "for the next 3 projects",
+    bar: `the next ${OFFER.projects} client projects at a lower price.`,
+    barShort: `for the next ${OFFER.projects} projects`,
     see: "See the offer",
   },
 
@@ -25,8 +26,8 @@ export const en = {
     eyebrow: "Websites and landing pages for small businesses",
     titleLead: "Your business needs more than",
     titleAccent: "an Instagram profile.",
-    lede: "I build modern websites and landing pages that present your services, build trust and make it easy for customers to contact you or book an appointment.",
-    ctaWork: "View my work",
+    lede: "We build modern websites and landing pages that present your services, build trust and make it easy for customers to contact you or book an appointment.",
+    ctaWork: "View our work",
     ctaStart: "Start a project",
     shotAlt: "The MB Hair Salon website on a phone",
   },
@@ -38,11 +39,11 @@ export const en = {
     items: [
       {
         title: "You're starting a new business and need your first website.",
-        text: "I'll build it from scratch — from structure to launch.",
+        text: "We'll build it from scratch — from structure to launch.",
       },
       {
         title: "Your current website looks outdated.",
-        text: "I'll redesign it into a fresh, modern site built for phones.",
+        text: "We'll redesign it into a fresh, modern site built for phones.",
       },
       {
         title: "You only have Instagram and want a professional online presence.",
@@ -57,15 +58,15 @@ export const en = {
 
   work: {
     eyebrow: "Work",
-    title: "A few things I've built.",
-    lede: "Personal projects I came up with, designed and launched myself — from a salon website to an invoicing tool.",
+    title: "A few things we've built.",
+    lede: "Demo projects, designed, built and launched end to end — from a salon website to an invoicing tool. Each one is live, so you can try it.",
     visit: "Visit site",
     newTab: "(opens in a new tab)",
   },
 
   services: {
     eyebrow: "Services & starting prices",
-    title: "What I can build for you.",
+    title: "What we can build for you.",
     lede: "Starting prices for the most common projects. You get the exact price in a written proposal.",
     items: [
       {
@@ -93,7 +94,7 @@ export const en = {
       "A basic technical SEO setup",
       "Testing of navigation, links and agreed functionality",
       "Setup and launch on the agreed hosting",
-      "A 30-day warranty",
+      `A ${TERMS.warrantyDays}-day warranty`,
     ],
     extrasTitle: "Additional functionality",
     extrasNote: "Based on the agreed project scope.",
@@ -114,12 +115,12 @@ export const en = {
       },
     ],
     moreTitle: "Need more than a website?",
-    moreText: "I can also help with what comes with a website — as an add-on or separately.",
+    moreText: "We can also help with what comes with a website — as an add-on or separately.",
     more: ["Domain & hosting", "Google Business Profile setup", "Basic SEO setup"],
     offer: {
       eyebrow: "Special offer",
-      title: "The next three client projects",
-      text: "For the next three client projects I'm offering a special, lower price while I build my portfolio of commercial work. In return, we agree that I can showcase the finished project as an example of my work. If you're happy with how we worked together, I'd also appreciate you sharing your honest experience.",
+      title: `The next ${OFFER.projects} client projects`,
+      text: `For the next ${OFFER.projects} client projects we're offering a special, lower price while we build our portfolio of client work. In return, we agree that we can show the finished project as an example of our work. If you're happy with how we worked together, we'd also appreciate you sharing your honest experience.`,
       prices: `Business website from €${OFFER.website} · Landing page from €${OFFER.landing}`,
       note: "Applies to the core build, not to additional functionality.",
     },
@@ -131,33 +132,43 @@ export const en = {
     steps: [
       { title: "Conversation", text: "We talk about your business, your goals and what the website needs to achieve." },
       { title: "Proposal & deposit", text: "You get a written proposal with scope, price and timeline; work starts after the deposit." },
-      { title: "Design", text: "I design the home page, which you approve before the build continues." },
-      { title: "Build & revisions", text: "I build the website, with two rounds of revisions within the agreed scope." },
-      { title: "Launch", text: "The website goes live, covered by a 30-day warranty." },
+      { title: "Design", text: "We design the home page, which you approve before the build continues." },
+      { title: "Build & revisions", text: `We build the website, with ${TERMS.revisionRounds} rounds of revisions within the agreed scope.` },
+      { title: "Launch", text: `The website goes live, covered by a ${TERMS.warrantyDays}-day warranty.` },
     ],
     scopeNote:
       "A new design after approval, new sections, new functionality or replacing all of the content are agreed as new work.",
     youTitle: "You provide",
     you: ["Logo", "Copy", "Services and prices", "Photos", "Contact details"],
     youNote: "Help with copy can be arranged.",
-    meTitle: "I handle",
+    meTitle: "We handle",
     me: ["Structure", "Design", "Development", "Launch", "Technical SEO basics", "Testing"],
-    ownTitle: "I build it. You own it.",
+    ownTitle: "We build it. You own it.",
     ownText: "The domain and accounts are registered in your name — the website is fully yours.",
   },
 
   about: {
     eyebrow: "About",
-    title: "You work directly with me.",
+    title: "A small studio. You talk to the people who build your site.",
     paras: [
-      "I'm Mihailo. I build websites and landing pages for small businesses — from the first conversation to launch, with no middlemen.",
-      "I work online, with clients anywhere.",
+      "Northlane Studio builds websites and landing pages for small businesses — salons, cafés, trades, studios and practices. The people you meet in the first conversation are the ones who design, build and launch your site.",
+      "We work online, with clients anywhere.",
     ],
-    photoAlt: "Mihailo",
-    photoPlaceholder: "[[photo]]",
-    qaTitle: "Built with a QA mindset",
-    qaText:
-      "My background is in software testing. So before launch I check every website across devices and browsers, and test forms, links, navigation and agreed functionality — all the small things that are easy to miss.",
+    values: [
+      {
+        title: "Clear before we start",
+        text: "Starting prices are on this page, and you get the scope, price and timeline in writing before any work begins.",
+      },
+      {
+        title: "Phones first",
+        text: "Most of your visitors arrive on a phone, so every layout is designed and checked on small screens first.",
+      },
+      {
+        title: "Built with a QA mindset",
+        text: "Before launch we check every website across devices and browsers, and test forms, links, navigation and the agreed functionality — all the small things that are easy to miss.",
+        qa: true,
+      },
+    ],
   },
 
   faq: {
@@ -170,7 +181,7 @@ export const en = {
       },
       {
         q: "How long does it take?",
-        a: "Usually 1–2 weeks for a landing page and 2–4 weeks for a business website. It depends mostly on when the copy and photos are ready. The exact timeline is in the proposal.",
+        a: `Usually ${TERMS.landingWeeks} weeks for a landing page and ${TERMS.websiteWeeks} weeks for a business website. It depends mostly on when the copy and photos are ready. The exact timeline is in the proposal.`,
       },
       {
         q: "What do you need from me?",
@@ -186,11 +197,11 @@ export const en = {
       },
       {
         q: "Can the website have online booking?",
-        a: "Yes. The simplest options are connecting a booking service you already use or a ready-made one (e.g. Cal.com), or adding an appointment request form that arrives in your email. If you need something more tailored, it's done as additional functionality: before we start, I'll tell you how much time and money it takes and whether it makes sense for your budget.",
+        a: "Yes. The simplest options are connecting a booking service you already use or a ready-made one (e.g. Cal.com), or adding an appointment request form that arrives in your email. If you need something more tailored, it's done as additional functionality: before we start, we'll tell you how much time and money it takes and whether it makes sense for your budget.",
       },
       {
         q: "What if something doesn't work after launch?",
-        a: "The 30-day warranty covers bugs in the build and in agreed functionality. New requests, content changes and new features are billed separately. Outages of external services and hosting are handled by their providers.",
+        a: `The ${TERMS.warrantyDays}-day warranty covers bugs in the build and in agreed functionality. New requests, content changes and new features are billed separately. Outages of external services and hosting are handled by their providers.`,
       },
     ],
   },
@@ -198,7 +209,7 @@ export const en = {
   contact: {
     eyebrow: "Contact",
     title: "Let's talk about your website.",
-    lede: "Not sure what kind of website you need? Tell me about your business and we'll find the right solution together.",
+    lede: "Not sure what kind of website you need? Tell us about your business and we'll find the right solution together.",
     nameLabel: "Name",
     namePlaceholder: "Your name",
     emailLabel: "Email",
@@ -210,15 +221,15 @@ export const en = {
     errName: "Please enter your name.",
     errEmail: "Please enter your email address.",
     errEmailInvalid: "Please enter a valid email address.",
-    errMessage: "Tell me a little about your project.",
-    errNotConnected: "The form isn't connected yet — please contact me directly {email}.",
-    errNetwork: "Network error — please try again or contact me directly.",
+    errMessage: "Tell us a little about your project.",
+    errNotConnected: "The form isn't connected yet — please contact us directly {email}.",
+    errNetwork: "Network error — please try again or contact us directly.",
     errGeneric: "Something went wrong. Please try again.",
     successTitle: "Message sent.",
-    successText: "Thanks — I'll get back to you within one business day.",
+    successText: `Thanks — we'll get back to you within ${TERMS.replyDays} business days.`,
     sendAnother: "Send another message",
-    subject: "New message from mihailobuilds.com",
-    directTitle: "Or contact me directly",
+    subject: "New message from the Northlane Studio demo",
+    directTitle: "Or contact us directly",
     email: "Email",
     viber: "Viber",
     whatsapp: "WhatsApp",
@@ -226,8 +237,8 @@ export const en = {
     opensViber: "Opens Viber",
     opensWhatsapp: "Opens WhatsApp",
     emailLink: "by email",
-    reply: "I reply within one business day.",
-    privacyLead: "I only use the details from this form to reply to you.",
+    reply: `We reply within ${TERMS.replyDays} business days.`,
+    privacyLead: "We only use the details from this form to reply to you.",
     privacyLink: "Privacy policy",
   },
 
@@ -236,69 +247,57 @@ export const en = {
     privacy: "Privacy",
     navLabel: "Footer navigation",
     navTitle: "Navigation",
-    copy: "© 2026 MihailoBuilds",
+    copy: `© ${TERMS.year} Northlane Studio`,
     ctaTitle: "Have a project in mind?",
-    offer: "a lower price for the next three client projects.",
+    offer: `a lower price for the next ${OFFER.projects} client projects.`,
+  },
+
+  demo: {
+    valueTitle: "Placeholder value in this demo",
+    pricesNote: "All prices and numbers on this site are placeholders — this is a demo.",
   },
 
   privacy: {
-    title: "Privacy policy",
-    updated: "Last updated: 5 October 2026",
+    title: "Sample privacy policy",
+    updated: `Last updated: ${TERMS.updated}`,
     back: "Back to home",
+    note: "Northlane Studio is fictional, and this is a sample of the policy a small studio would publish. This demo itself collects no personal data: the contact form sends nothing, and there are no cookies or analytics. The site is hosted on Vercel, which processes standard request data, such as IP addresses, to deliver the pages.",
     sections: [
       {
         h: "Who processes your data",
-        p: [
-          "The data controller is Mihailo Sebek, Serbia. For any data-related questions, contact me {email}.",
-          "Processing is governed by the Personal Data Protection Law of the Republic of Serbia.",
-        ],
+        p: ["Northlane Studio is the data controller. For any data-related questions, contact us {email}."],
       },
       {
-        h: "What data I collect",
+        h: "What data we collect",
         p: [
           "When you send a message through the contact form: your name, email address and the content of the message.",
-          "When you contact me directly (email, Viber, WhatsApp): the information you choose to send.",
-          "When you visit the website: technical data processed by the hosting and analytics services (described below).",
+          "When you contact us directly (email, Viber, WhatsApp): the information you choose to send.",
         ],
       },
       {
         h: "Purpose and legal basis",
         p: [
-          "I use the details from your message only to reply and, if you ask, to prepare a proposal. This processing is necessary for steps taken at your request before any possible collaboration.",
-          "I use visit data to understand website traffic. The legal basis is my legitimate interest in knowing how the website is used; the statistics are aggregated and do not show who you are.",
-          "I don't sell your data, use it for advertising or send newsletters.",
+          "We use the details from your message only to reply and, if you ask, to prepare a proposal. This processing is necessary for steps taken at your request before any possible collaboration.",
+          "We don't sell your data, use it for advertising or send newsletters.",
         ],
       },
       {
-        h: "How long I keep data",
+        h: "How long we keep data",
         p: [
-          "I keep messages for as long as needed to respond to your enquiry and, if we work together, for the duration of the collaboration. If we don't end up working together, I delete them no later than 12 months after our last contact.",
-          "Web3Forms keeps form submissions for at most three years from the date they are sent, unless they are deleted earlier. Vercel Web Analytics discards visit sessions after 24 hours. Otherwise, Vercel and Google keep data according to their own privacy policies.",
+          `We keep messages for as long as needed to respond to your enquiry and, if we work together, for the duration of the collaboration. If we don't end up working together, we delete them no later than ${TERMS.keepMonths} months after our last contact.`,
         ],
       },
       {
         h: "Who else has access",
         p: [
-          "Web3Forms (Web3Creative, India) — the service that forwards contact form messages to my email. Messages pass through its infrastructure at Amazon Web Services, Cloudflare and Hetzner, and the sender's IP address and email address may be checked by the spam filters CleanTalk and Akismet.",
-          "Vercel Inc. (USA) — website hosting and Vercel Web Analytics for traffic statistics. On every visit Vercel processes your IP address, the city and country derived from it, and technical data about your browser and device. Analytics stores only anonymous data points: the page, the referring site, country, region and city, operating system, browser and device type.",
-          "Google (Gmail) — my email service, where received messages are stored.",
-        ],
-      },
-      {
-        h: "Transfers outside Serbia",
-        p: ["The services listed process data outside Serbia. Vercel processes data mainly in the United States; for transfers from the EU it relies on the EU Standard Contractual Clauses and the EU-U.S. Data Privacy Framework. Web3Forms operates from India on infrastructure that may process data in several regions, and for transfers from the EU relies on the EU Standard Contractual Clauses. Google keeps data on servers around the world."],
-      },
-      {
-        h: "Cookies and analytics",
-        p: [
-          "The website does not use cookies for advertising or cross-site tracking. Basic traffic statistics are provided by Vercel Web Analytics, which does not use third-party cookies: it recognises visitors by a hash created from the request and does not keep visit sessions permanently; they are discarded after 24 hours.",
+          "The services that deliver form messages, store email and host the website. A live policy names each provider, the data it processes and the country it processes it in.",
         ],
       },
       {
         h: "Your rights",
         p: [
           "You have the right to request access to your data, its correction or deletion, restriction of processing, data portability, and to object to processing.",
-          `You can send a request {email} or through the contact form. You also have the right to lodge a complaint with the Commissioner for Information of Public Importance and Personal Data Protection.`,
+          "You can send a request {email} or through the contact form. You also have the right to lodge a complaint with your data protection authority.",
         ],
       },
     ],

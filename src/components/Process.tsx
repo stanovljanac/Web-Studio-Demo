@@ -1,5 +1,6 @@
 import { CheckIcon } from "./icons";
 import { Reveal } from "./Reveal";
+import { DemoText } from "./DemoValue";
 import { useT } from "../i18n";
 
 export function Process() {
@@ -21,7 +22,9 @@ export function Process() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="step__title">{step.title}</h3>
-              <p className="step__text">{step.text}</p>
+              <p className="step__text">
+                <DemoText text={step.text} />
+              </p>
             </Reveal>
           ))}
         </ol>

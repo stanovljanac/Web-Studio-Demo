@@ -1,5 +1,6 @@
 import { CheckIcon, PlusIcon } from "./icons";
 import { Reveal } from "./Reveal";
+import { DemoText } from "./DemoValue";
 import { OFFER } from "../data/pricing";
 import { useT } from "../i18n";
 
@@ -21,12 +22,17 @@ export function Services() {
           {s.items.map((item, i) => (
             <Reveal key={item.name} delay={i * 70} className="svc-card">
               <h3 className="svc-card__name">{item.name}</h3>
-              <p className="svc-card__price">{item.price}</p>
-              <p className="svc-card__desc">{item.desc}</p>
+              <p className="svc-card__price">
+                <DemoText text={item.price} />
+              </p>
+              <p className="svc-card__desc">
+                <DemoText text={item.desc} />
+              </p>
             </Reveal>
           ))}
         </div>
         <p className="svc-note">{s.note}</p>
+        <p className="svc-note">{t.demo.pricesNote}</p>
 
         <div className="svc-details">
           <Reveal className="svc-box">
@@ -35,7 +41,9 @@ export function Services() {
               {s.includes.map((x) => (
                 <li key={x}>
                   <CheckIcon aria-hidden="true" />
-                  <span>{x}</span>
+                  <span>
+                    <DemoText text={x} />
+                  </span>
                 </li>
               ))}
             </ul>
@@ -79,9 +87,15 @@ export function Services() {
           <div id="offer">
             <Reveal className="offer">
               <p className="eyebrow">{s.offer.eyebrow}</p>
-              <h3 className="offer__title">{s.offer.title}</h3>
-              <p className="offer__text">{s.offer.text}</p>
-              <p className="offer__prices">{s.offer.prices}</p>
+              <h3 className="offer__title">
+                <DemoText text={s.offer.title} />
+              </h3>
+              <p className="offer__text">
+                <DemoText text={s.offer.text} />
+              </p>
+              <p className="offer__prices">
+                <DemoText text={s.offer.prices} />
+              </p>
               <p className="offer__note">{s.offer.note}</p>
             </Reveal>
           </div>

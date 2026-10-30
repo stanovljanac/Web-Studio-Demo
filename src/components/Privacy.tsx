@@ -1,4 +1,5 @@
 import { WithEmail } from "./Email";
+import { DemoText } from "./DemoValue";
 import { PATHS, useT } from "../i18n";
 
 export function Privacy() {
@@ -12,7 +13,10 @@ export function Privacy() {
       <h1 id="privacy-title" className="legal__title">
         {p.title}
       </h1>
-      <p className="legal__updated">{p.updated}</p>
+      <p className="legal__updated">
+        <DemoText text={p.updated} />
+      </p>
+      <p className="legal__note">{p.note}</p>
       {p.sections.map((s) => (
         <section key={s.h} className="legal__section">
           <h2>{s.h}</h2>

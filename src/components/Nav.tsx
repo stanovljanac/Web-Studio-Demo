@@ -2,6 +2,7 @@ import { Button } from "../ds";
 import { ArrowIcon } from "./icons";
 import { useScrolled } from "../hooks/useScrolled";
 import { Logo } from "./Logo";
+import { DemoText } from "./DemoValue";
 import { OFFER } from "../data/pricing";
 import { PATHS, sectionHref, usePage } from "../i18n";
 
@@ -16,8 +17,13 @@ export function Nav() {
         <a className="offer-bar" href={href("offer")}>
           <span className="offer-bar__text">
             <b>{t.services.offer.eyebrow}</b>
-            <span className="offer-bar__long">: {t.offerCta.bar}</span>
-            <span className="offer-bar__short"> {t.offerCta.barShort}</span>
+            <span className="offer-bar__long">
+              : <DemoText text={t.offerCta.bar} />
+            </span>
+            <span className="offer-bar__short">
+              {" "}
+              <DemoText text={t.offerCta.barShort} />
+            </span>
           </span>
           <span className="offer-bar__cta">
             <span className="offer-bar__see">{t.offerCta.see}</span>

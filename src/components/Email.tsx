@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { contactHref, type ContactKind } from "../data/contact";
 import { sectionHref, usePage, useT } from "../i18n";
+import { DemoText } from "./DemoValue";
 
 /* A link to email / Viber / WhatsApp that shows no address or number.
    Its href points to the contact form; the real address is set only when
@@ -31,7 +32,8 @@ export function ContactLink({
   );
 }
 
-/* Renders a dictionary string, replacing every "{email}" with an email link. */
+/* Renders a dictionary string, replacing every "{email}" with an email link
+   (and every {{X}} with a demo value). */
 export function WithEmail({ text }: { text: string }) {
   const t = useT();
   const parts = text.split("{email}");
@@ -39,7 +41,7 @@ export function WithEmail({ text }: { text: string }) {
     <>
       {parts.map((part, i) => (
         <Fragment key={i}>
-          {part}
+          <DemoText text={part} />
           {i < parts.length - 1 ? <ContactLink kind="email">{t.contact.emailLink}</ContactLink> : null}
         </Fragment>
       ))}

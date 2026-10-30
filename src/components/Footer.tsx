@@ -2,6 +2,7 @@ import { Button } from "../ds";
 import { ArrowIcon } from "./icons";
 import { ContactLink } from "./Email";
 import { Logo } from "./Logo";
+import { DemoText } from "./DemoValue";
 import { OFFER } from "../data/pricing";
 import { PATHS, sectionHref, usePage } from "../i18n";
 
@@ -15,7 +16,7 @@ export function Footer() {
           <p className="footer__cta-title">{t.footer.ctaTitle}</p>
           {OFFER.open ? (
             <p className="footer__offer">
-              <b>{t.services.offer.eyebrow}:</b> {t.footer.offer}{" "}
+              <b>{t.services.offer.eyebrow}:</b> <DemoText text={t.footer.offer} />{" "}
               <a href={href("offer")}>
                 {t.offerCta.see} <ArrowIcon aria-hidden="true" />
               </a>
@@ -49,7 +50,9 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer__bottom">
-        <span>{t.footer.copy}</span>
+        <span>
+          <DemoText text={t.footer.copy} />
+        </span>
         <a href={PATHS.privacy}>{t.footer.privacy}</a>
       </div>
     </footer>

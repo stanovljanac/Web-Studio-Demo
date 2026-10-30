@@ -1,5 +1,6 @@
 import { PlusIcon } from "./icons";
 import { Reveal } from "./Reveal";
+import { DemoText } from "./DemoValue";
 import { useT } from "../i18n";
 
 export function Faq() {
@@ -20,7 +21,9 @@ export function Faq() {
                 <span>{item.q}</span>
                 <PlusIcon aria-hidden="true" />
               </summary>
-              <p>{item.a}</p>
+              <p>
+                <DemoText text={item.a} />
+              </p>
             </details>
           ))}
         </Reveal>

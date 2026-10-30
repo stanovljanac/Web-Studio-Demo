@@ -1,4 +1,3 @@
-import { Analytics } from "@vercel/analytics/react";
 import { PageContext, type Page } from "./i18n";
 import { en } from "./i18n/en";
 import { Nav } from "./components/Nav";
@@ -40,7 +39,6 @@ export default function App({ page }: { page: Page }) {
           )}
         </main>
         <Footer />
-        <Analytics />
       </div>
     </PageContext.Provider>
   );
