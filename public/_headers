@@ -1,0 +1,4 @@
+# Cloudflare Pages (vercel.json does the same on Vercel): a font file never
+# changes under the same name, so it is cached for a year.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

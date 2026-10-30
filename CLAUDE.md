@@ -4,7 +4,7 @@ Read this first in every session.
 
 ## People and language
 - Owner: **Mihailo** (MihailoBuilds). Talk to him in **Serbian**. Code, comments, commit messages and PR text are in **English**.
-- He reviews every change on the Vercel preview and decides. Ask before anything that is his call: copy tone, design direction, the brand.
+- He reviews every change on the preview deploy and decides. Ask before anything that is his call: copy tone, design direction, the brand.
 
 ## What this is
 - A **demo business website** for **Northlane Studio**, a fictional web studio for small businesses. It shows the kind of site Mihailo can build; it sells nothing.
@@ -19,7 +19,7 @@ Read this first in every session.
 
   | Category | Example | Rule | Check |
   |---|---|---|---|
-  | Unfinished content | `[[photo]]` | never on `main` | the build lists `[[…]]`; with `VERCEL_ENV=production` or `STRICT_PLACEHOLDERS=1` it fails |
+  | Unfinished content | `[[photo]]` | never on `main` | the build lists `[[…]]`; with `CF_PAGES_BRANCH=main`, `VERCEL_ENV=production` or `STRICT_PLACEHOLDERS=1` it fails |
   | Intended demo value | €X, N-day, X–Y weeks | only as `{{X}}` in `src/data/pricing.ts` / `en.ts`, rendered by `<DemoText>` as a `.demo-value` chip | `npm run qa:numbers`: no digit in the visible text, no placeholder letter outside a chip |
   | Real business figure | "200+ clients" | does not exist here | `qa:numbers` + reading the copy |
 - **Contacts:** this repo holds **no real email or phone**, not even as codes. The channels show `hello@northlane.example` and a `{{+000 00 000 000}}` chip, and every contact link (`<ContactLink>`, a button) opens the demo notice.
@@ -37,10 +37,11 @@ Read this first in every session.
 - **Components** (`src/components/`): Nav (offer bar + nav pill), Hero, Audience, Projects, Services, Process, About (studio + value cards), Faq, Contact, Privacy, Footer, Logo (`Logo`, `MbMark`), Email (`ContactLink`, `WithEmail`), DemoValue (`DemoValue`, `DemoText`), DemoNotice (`DemoNoticeProvider`, `DemoPill`, `useDemoNotice`), Reveal. The hero does not use `<Reveal>`: it must be visible before JS runs.
 - **Styles:** `src/styles/index.css` imports `fonts.css`, `tokens/`, `ds.css`, `site.css`. Use the tokens; no raw colours in `site.css`.
 - **Logo:** compass needle on a cobalt disc, SVG paths in `Logo.tsx`, coloured by CSS variables; `public/favicon.svg` is the same drawing. Icons and `public/og.png` come from `npm run build && node scripts/brand-assets.mjs`; run it again after changing the hero copy, the logo, the colours or the domain.
-- `vercel.json` sets `trailingSlash: true` and caches `/fonts/` for a year (give a replaced font file a new name).
+- **Hosting: Cloudflare Pages**, project `web-studio-demo` (`demostudio` CNAME at GoDaddy → `web-studio-demo.pages.dev`). The build command `npm run build` is set in the Pages dashboard; `wrangler.jsonc` (`pages_build_output_dir: ./dist`) says what gets published. Without it Pages publishes the repo root and the site is blank.
+- `public/_headers` (Pages) and `vercel.json` (Vercel) cache `/fonts/` for a year (give a replaced font file a new name). Pages adds the trailing slash itself (`/privacy` → `/privacy/`); `vercel.json` sets `trailingSlash: true`.
 
 ## Branches
-- Work goes on the **`preview`** branch, which gets a Vercel preview. `main` is created and pushed only when Mihailo says the demo is done; a push to `main` is the production deploy once the Vercel project exists.
+- Work goes on the **`preview`** branch, which gets a preview deploy (`preview.web-studio-demo.pages.dev`). A push to `main` is the production deploy: only when Mihailo says so.
 - Push only with Mihailo's go-ahead.
 
 ## Commands and QA

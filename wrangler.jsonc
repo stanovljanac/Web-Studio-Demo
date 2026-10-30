@@ -1,0 +1,9 @@
+// Cloudflare Pages: the dashboard's build command (`npm run build`) writes the
+// site to dist/. pages_build_output_dir takes precedence over the dashboard's
+// "Build output directory"; without it Pages publishes the repo root, which
+// serves the unbuilt index.html (a blank page).
+{
+  "name": "web-studio-demo",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-10-01"
+}

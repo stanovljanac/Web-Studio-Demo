@@ -38,8 +38,9 @@ for (const f of ["sitemap.xml", "robots.txt"]) {
 
 fs.rmSync(ssrDir, { recursive: true, force: true });
 
-// Placeholders ([[…]]) must never reach production. The production build on
-// Vercel (VERCEL_ENV=production, i.e. `main`) fails while any are left;
+// Placeholders ([[…]]) must never reach production. The production build of
+// `main` (CF_PAGES_BRANCH=main on Cloudflare Pages, VERCEL_ENV=production on
+// Vercel) fails while any are left;
 // preview and local builds only warn, so previews keep working in the
 // meantime. STRICT_PLACEHOLDERS=1 makes a local build fail the same way.
 const leftovers = [];
@@ -49,7 +50,10 @@ for (const f of [...PAGES.map((p) => p.file), "sitemap.xml", "robots.txt"]) {
 }
 console.log(`prerendered ${PAGES.length} pages`);
 if (leftovers.length) {
-  const strict = process.env.VERCEL_ENV === "production" || process.env.STRICT_PLACEHOLDERS === "1";
+  const strict =
+    process.env.CF_PAGES_BRANCH === "main" ||
+    process.env.VERCEL_ENV === "production" ||
+    process.env.STRICT_PLACEHOLDERS === "1";
   const msg = "Placeholders left — fill these in before production:\n" + leftovers.join("\n");
   if (strict) {
     console.error(`\n✖ ${msg}\n`);

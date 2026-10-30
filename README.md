@@ -45,6 +45,16 @@ npm run qa:shots -- pages=/ widths=375,1440   # screenshots → .qa/
 
 The browser checks run against `npm run preview` with Playwright, which is not a project dependency: set `PLAYWRIGHT_MODULE` to a Playwright `index.js` (see `scripts/qa/_lib.mjs`) and `QA_BASE` if the preview runs on another port.
 
+## Deploy (Cloudflare Pages)
+
+The repo is connected to the Cloudflare Pages project `web-studio-demo`:
+
+- **Build command** (set in the dashboard, Settings → Builds): `npm run build`. Pages installs the dependencies from `package-lock.json` first.
+- **Output**: `pages_build_output_dir` in `wrangler.jsonc` publishes `dist/`. Without it Pages publishes the repo root, and the site is a blank page.
+- Every push to `main` is production (https://web-studio-demo.pages.dev); every other branch gets a preview URL (`preview` → https://preview.web-studio-demo.pages.dev).
+- Domain: the DNS for `mihailobuilds.com` is at GoDaddy, with a CNAME `demostudio` → `web-studio-demo.pages.dev`; `demostudio.mihailobuilds.com` is added under the project's Custom domains.
+- Headers: `public/_headers` caches `/fonts/` for a year.
+
 ## Where to edit
 
 - **Copy**: `src/i18n/en.ts`
