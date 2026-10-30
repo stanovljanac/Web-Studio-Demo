@@ -52,8 +52,12 @@ export async function launchChromium() {
 /* ignoreHTTPSErrors: the cloud sandbox proxies HTTPS with its own CA, which
    Chromium rejects. The site itself loads nothing from other origins
    (fonts are self-hosted), so this only matters for external links. */
-export async function newContext(browser, opts = {}) {
-  return browser.newContext({ ignoreHTTPSErrors: true, ...opts });
+export async function newContext(browser, { showDemoNotice = false, ...opts } = {}) {
+  const ctx = await browser.newContext({ ignoreHTTPSErrors: true, ...opts });
+  /* The demo notice opens on a first visit and makes the page inert. The
+     checks run as a returning visitor, except the ones about the notice. */
+  if (!showDemoNotice) await ctx.addInitScript(() => { try { localStorage.setItem("demo-notice-v1", "1"); } catch {} });
+  return ctx;
 }
 
 /* Scroll through the page so every <Reveal> section becomes visible.
@@ -71,18 +75,26 @@ export async function scrollThrough(page, step = 300) {
 
 export const shotName = (path, w) => (path === "/" ? "en" : path.replaceAll("/", "_").replace(/^_|_$/g, "")) + "-" + w;
 
-/* Strings that must never appear in the built files or on the page.
-   They are derived from the character codes in src/data/contact.ts, so the
-   real email and phone number are never written in plain text in the repo. */
-export function contactNeedles() {
-  const src = readFileSync(join(ROOT, "src/data/contact.ts"), "utf8");
-  const codes = (name) => {
-    const m = src.match(new RegExp(name + "\\s*=\\s*\\[([\\d,\\s]+)\\]"));
-    if (!m) throw new Error(`${name} not found in src/data/contact.ts`);
-    return String.fromCharCode(...m[1].split(",").map(Number));
-  };
-  const email = codes("EMAIL_CODES");
-  const phone = codes("PHONE_CODES"); // international digits, no "+"
-  const national = phone.replace(/^381/, "");
-  return [email, email.split("@")[0], phone, national, `${national.slice(0, 2)} ${national.slice(2, 5)}`];
+/* Strings that must never appear in the built files or on the page, as
+   [needle, kind] pairs:
+   - traces of the business site this demo was made from: its location and
+     its Serbian pages
+   - the owner's real email and phone. This repo holds no contact data, so
+     they are decoded from the character codes in the portfolio's
+     src/data/contact.ts: QA_CONTACT_SOURCE, or ../Portfolio next to this
+     repo. Without that file only the other needles are checked.
+   Callers print kinds and counts, never the needles themselves. */
+export function leakNeedles() {
+  const needles = [["Serbia", "location"], ["Srbij", "location"], ["Kragujevac", "location"], ["/sr/", "Serbian pages"]];
+  const source = process.env.QA_CONTACT_SOURCE || join(ROOT, "../Portfolio/src/data/contact.ts");
+  if (!existsSync(source)) return { needles, contactSource: null };
+  for (const [, codes] of readFileSync(source, "utf8").matchAll(/=\s*\[([\d,\s]+)\]/g)) {
+    const v = String.fromCharCode(...codes.split(",").map(Number));
+    if (v.includes("@")) needles.push([v, "email"], [v.split("@")[0], "email"]);
+    else if (/^\d+$/.test(v)) {
+      const national = v.replace(/^381/, ""); // international digits, no "+"
+      needles.push([v, "phone"], [national, "phone"], [`${national.slice(0, 2)} ${national.slice(2, 5)}`, "phone"]);
+    }
+  }
+  return { needles, contactSource: source };
 }

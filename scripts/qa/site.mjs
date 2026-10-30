@@ -1,6 +1,8 @@
 /* Behaviour checks:
    - content visible without JavaScript (prerender + <noscript>)
    - reduced motion shows every section
+   - demo notice: opens once on a first visit with focus inside, keeps focus
+     inside, closes with Esc, stays closed after a reload, the pill reopens it
    - keyboard: FAQ toggles, anchor lands below the fixed nav
    - links: internal 200s, anchors exist, external links open safely and
      answer with 2xx (HEAD, then GET for servers that refuse HEAD). A dead
@@ -36,6 +38,36 @@ const b = await launch();
 }
 
 {
+  const ctx = await newContext(b, { showDemoNotice: true, viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  // It opens after hydration, which can finish after "networkidle".
+  await page.waitForSelector(".demo-notice[open]", { timeout: 5000 }).catch(() => {});
+  const state = () => page.evaluate(() => {
+    const d = document.querySelector(".demo-notice");
+    const a = document.activeElement;
+    // body = focus left the page for the browser's own UI, which a modal dialog allows
+    return { open: d.open, inside: d.contains(a), onPage: a !== document.body && !d.contains(a) };
+  });
+  const first = await state();
+  let escaped = 0;
+  for (let i = 0; i < 8; i++) { await page.keyboard.press("Tab"); if ((await state()).onPage) escaped++; }
+  // Tab can leave the document for the browser's UI; Esc only reaches the page from inside it.
+  await page.focus(".demo-notice__close");
+  await page.keyboard.press("Escape");
+  const afterEsc = await state();
+  await page.reload({ waitUntil: "networkidle" });
+  await page.waitForTimeout(1000); // time to hydrate, so a wrong reopen would show
+  const afterReload = await state();
+  await page.click(".demo-pill--corner");
+  const pill = await state();
+  await page.click(".demo-notice__close");
+  const closed = await state();
+  log(`demo notice: first visit open ${first.open}, focus inside ${first.inside} | Tab reached the page ${escaped}/8 | Esc closes ${!afterEsc.open} | after reload open ${afterReload.open} | pill reopens ${pill.open} | button closes ${!closed.open}`);
+  await ctx.close();
+}
+
+{
   const ctx = await newContext(b, { viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(BASE + "/", { waitUntil: "networkidle" });
@@ -52,8 +84,6 @@ const b = await launch();
   await page.waitForTimeout(1200);
   const top = await page.evaluate(() => [document.querySelector("#services").getBoundingClientRect().top, document.querySelector(".nav").getBoundingClientRect().height]);
   log(`#services top after nav click: ${Math.round(top[0])}px (nav ${Math.round(top[1])}px)`);
-  await page.goto(BASE + "/", { waitUntil: "networkidle" });
-  log("honeypot visible:", await page.isVisible("input[name=botcheck]"));
   await ctx.close();
 }
 

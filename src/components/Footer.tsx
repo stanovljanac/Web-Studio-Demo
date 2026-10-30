@@ -43,9 +43,9 @@ export function Footer() {
         <div className="footer__meta">
           <div className="footer__group">
             <p className="footer__heading">{t.contact.eyebrow}</p>
-            <ContactLink kind="email">{t.contact.email}</ContactLink>
-            <ContactLink kind="viber">{t.contact.viber}</ContactLink>
-            <ContactLink kind="whatsapp">{t.contact.whatsapp}</ContactLink>
+            <ContactLink>{t.contact.email}</ContactLink>
+            <ContactLink>{t.contact.viber}</ContactLink>
+            <ContactLink>{t.contact.whatsapp}</ContactLink>
           </div>
         </div>
       </div>

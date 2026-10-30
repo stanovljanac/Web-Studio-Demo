@@ -12,6 +12,7 @@
     "qa:numbers": "node scripts/qa/numbers.mjs",
     "qa:main": "node scripts/qa/main.mjs",
     "qa:site": "node scripts/qa/site.mjs",
+    "qa:form": "node scripts/qa/form.mjs",
     "qa:shots": "node scripts/qa/shots.mjs"
   },
   "dependencies": {

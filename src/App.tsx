@@ -11,12 +11,14 @@ import { Faq } from "./components/Faq";
 import { Contact } from "./components/Contact";
 import { Privacy } from "./components/Privacy";
 import { Footer } from "./components/Footer";
+import { DemoNoticeProvider } from "./components/DemoNotice";
 import { OFFER } from "./data/pricing";
 
 export default function App({ page }: { page: Page }) {
   const t = en;
   return (
     <PageContext.Provider value={{ page, t }}>
+      <DemoNoticeProvider>
       <div className={"page" + (OFFER.open ? " has-offer" : "")}>
         <a className="skip-link" href="#main">
           {t.skip}
@@ -40,6 +42,7 @@ export default function App({ page }: { page: Page }) {
         </main>
         <Footer />
       </div>
+      </DemoNoticeProvider>
     </PageContext.Provider>
   );
 }

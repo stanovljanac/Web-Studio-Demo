@@ -1,4 +1,4 @@
-import { OFFER, PRICING, TERMS } from "../data/pricing";
+import { OFFER, PRICING, TERMS, demo } from "../data/pricing";
 
 /* All copy on the site. The shape of this object is the Dict type.
    Northlane Studio is fictional; {{X}} marks a placeholder value. */
@@ -222,23 +222,19 @@ export const en = {
     errEmail: "Please enter your email address.",
     errEmailInvalid: "Please enter a valid email address.",
     errMessage: "Tell us a little about your project.",
-    errNotConnected: "The form isn't connected yet — please contact us directly {email}.",
-    errNetwork: "Network error — please try again or contact us directly.",
-    errGeneric: "Something went wrong. Please try again.",
-    successTitle: "Message sent.",
-    successText: `Thanks — we'll get back to you within ${TERMS.replyDays} business days.`,
-    sendAnother: "Send another message",
-    subject: "New message from the Northlane Studio demo",
+    formNote: "Demo form — messages are not sent.",
+    successTitle: "Demo: no message was sent.",
+    successText: "On a live site, your message would reach the studio's inbox and this is where you'd see the confirmation.",
+    sendAnother: "Try the form again",
     directTitle: "Or contact us directly",
     email: "Email",
     viber: "Viber",
     whatsapp: "WhatsApp",
-    opensEmail: "Opens your email app",
-    opensViber: "Opens Viber",
-    opensWhatsapp: "Opens WhatsApp",
+    emailValue: "hello@northlane.example",
+    phoneValue: demo("+000 00 000 000"),
     emailLink: "by email",
     reply: `We reply within ${TERMS.replyDays} business days.`,
-    privacyLead: "We only use the details from this form to reply to you.",
+    privacyLead: "In this demo, nothing you type is sent or stored.",
     privacyLink: "Privacy policy",
   },
 
@@ -255,6 +251,17 @@ export const en = {
   demo: {
     valueTitle: "Placeholder value in this demo",
     pricesNote: "All prices and numbers on this site are placeholders — this is a demo.",
+    pill: "Web Studio Demo",
+    pillShort: "Demo",
+    title: "This is a demo website.",
+    paras: [
+      "Northlane Studio is a fictional web studio. Its name, prices, contact details, form and privacy policy are made up, and nothing you type here is sent anywhere.",
+      "The projects in the Work section are real: each one is live, so you can try it.",
+    ],
+    credit: "Designed & built by Mihailo Sebek",
+    creditLink: "MihailoBuilds",
+    newTab: "(opens in a new tab)",
+    close: "Got it, show me the site",
   },
 
   privacy: {

@@ -51,6 +51,9 @@
   --success: #157A4A;
   --success-bg: rgba(21, 122, 74, 0.1);
 
+  /* Behind the demo notice dialog */
+  --backdrop: rgba(11, 27, 63, 0.55);
+
   /* Diagonal stripes of the screenshot placeholder */
   --stripe: rgba(11, 27, 63, 0.04);
 }

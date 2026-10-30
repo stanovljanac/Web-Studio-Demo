@@ -1,34 +1,17 @@
 import { Fragment } from "react";
-import type { MouseEvent, ReactNode } from "react";
-import { contactHref, type ContactKind } from "../data/contact";
-import { sectionHref, usePage, useT } from "../i18n";
+import type { ReactNode } from "react";
+import { useT } from "../i18n";
 import { DemoText } from "./DemoValue";
+import { useDemoNotice } from "./DemoNotice";
 
-/* A link to email / Viber / WhatsApp that shows no address or number.
-   Its href points to the contact form; the real address is set only when
-   the visitor clicks, and the browser then opens the matching app. */
-export function ContactLink({
-  kind,
-  className,
-  children,
-}: {
-  kind: ContactKind;
-  className?: string;
-  children: ReactNode;
-}) {
-  const { page } = usePage();
-  const reveal = (e: MouseEvent<HTMLAnchorElement>) => {
-    const a = e.currentTarget;
-    a.href = contactHref(kind);
-    if (kind === "whatsapp") {
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-    }
-  };
+/* A contact link (email / Viber / WhatsApp) of the fictional studio. There
+   is no real address behind it: it is a button that opens the demo notice. */
+export function ContactLink({ className = "", children }: { className?: string; children: ReactNode }) {
+  const openNotice = useDemoNotice();
   return (
-    <a href={sectionHref(page, "contact")} className={className} onClick={reveal} onAuxClick={reveal}>
+    <button type="button" className={"contact-link " + className} onClick={openNotice} aria-haspopup="dialog">
       {children}
-    </a>
+    </button>
   );
 }
 
@@ -42,7 +25,7 @@ export function WithEmail({ text }: { text: string }) {
       {parts.map((part, i) => (
         <Fragment key={i}>
           <DemoText text={part} />
-          {i < parts.length - 1 ? <ContactLink kind="email">{t.contact.emailLink}</ContactLink> : null}
+          {i < parts.length - 1 ? <ContactLink className="contact-link--inline">{t.contact.emailLink}</ContactLink> : null}
         </Fragment>
       ))}
     </>

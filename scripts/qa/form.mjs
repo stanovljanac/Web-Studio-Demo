@@ -1,61 +1,38 @@
-/* Contact form states, with the Web3Forms API mocked (no real submissions).
-   node scripts/qa/form.mjs nokey  -> build WITHOUT VITE_WEB3FORMS_ACCESS_KEY: validation + "not connected" error
-   node scripts/qa/form.mjs key    -> build WITH a key (any value): loading, success, double submit, API and network errors */
+/* Demo contact form: validation, "Sending…", the demo success message,
+   double submit, and that no request leaves the page while it runs.
+   npm run qa:form (with `npm run preview` running) */
 import { BASE, launch, log, newContext } from "./_lib.mjs";
 
-const mode = process.argv[2];
-if (!["nokey", "key"].includes(mode)) { console.error("usage: node scripts/qa/form.mjs nokey|key"); process.exit(1); }
 const browser = await launch();
-async function fresh(path, route) {
-  const ctx = await newContext(browser, { viewport: { width: 1280, height: 900 } });
-  const page = await ctx.newPage();
-  const errs = []; page.on("pageerror", e => errs.push(e.message));
-  let calls = 0;
-  if (route) await page.route("https://api.web3forms.com/**", async r => { calls++; await new Promise(x => setTimeout(x, 800)); await route(r); });
-  await page.goto(BASE + path, { waitUntil: "networkidle" });
-  await page.locator("#contact").scrollIntoViewIfNeeded(); await page.waitForTimeout(900);
-  return { ctx, page, calls: () => calls, errs };
-}
-const errsText = p => p.$$eval(".mb-field__hint--error, .contact__error", els => els.map(e => e.textContent));
-for (const path of ["/"]) {
-  if (mode === "nokey") {
-    const { ctx, page } = await fresh(path);
-    await page.click(".contact__form button[type=submit]");
-    log(path, "empty:", await errsText(page));
-    await page.fill("input[name=name]", "Test"); await page.fill("input[name=email]", "not-an-email"); await page.fill("textarea[name=message]", "Ćao, šta ima? Đak, žaba, čvor.");
-    await page.click(".contact__form button[type=submit]");
-    log(path, "invalid email:", await errsText(page));
-    await page.fill("input[name=email]", "test@example.com");
-    await page.click(".contact__form button[type=submit]");
-    log(path, "valid, no key:", await errsText(page));
-    await ctx.close();
-  } else {
-    // success + double submit + loading state
-    let s = await fresh(path, r => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ success: true }) }));
-    await s.page.fill("input[name=name]", "Test"); await s.page.fill("input[name=email]", "test@example.com");
-    await s.page.fill("textarea[name=message]", "x".repeat(5000));
-    const btn = s.page.locator(".contact__form button[type=submit]");
-    await btn.click(); await btn.click({ force: true }).catch(() => {}); await btn.dblclick({ force: true }).catch(() => {});
-    log(path, "loading state:", await btn.textContent(), "disabled:", await btn.isDisabled());
-    await s.page.waitForSelector(".contact__success", { timeout: 5000 });
-    log(path, "success:", await s.page.textContent(".contact__success h3"), "| API calls:", s.calls());
-    await s.page.reload({ waitUntil: "networkidle" });
-    log(path, "after refresh form visible:", await s.page.isVisible(".contact__form"));
-    await s.ctx.close();
-    // API returns failure
-    s = await fresh(path, r => r.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ success: false, message: "Invalid access key" }) }));
-    await s.page.fill("input[name=name]", "Test"); await s.page.fill("input[name=email]", "test@example.com"); await s.page.fill("textarea[name=message]", "Hi");
-    await s.page.click(".contact__form button[type=submit]");
-    await s.page.waitForSelector(".contact__error", { timeout: 5000 });
-    log(path, "API failure:", await errsText(s.page), "| button:", await s.page.locator(".contact__form button[type=submit]").textContent());
-    await s.ctx.close();
-    // network error
-    s = await fresh(path, r => r.abort());
-    await s.page.fill("input[name=name]", "Test"); await s.page.fill("input[name=email]", "test@example.com"); await s.page.fill("textarea[name=message]", "Hi");
-    await s.page.click(".contact__form button[type=submit]");
-    await s.page.waitForSelector(".contact__error", { timeout: 5000 });
-    log(path, "network error:", await errsText(s.page), s.errs.length ? "pageerrors: " + s.errs : "");
-    await s.ctx.close();
-  }
-}
+const ctx = await newContext(browser, { viewport: { width: 1280, height: 900 } });
+const page = await ctx.newPage();
+const errs = [];
+page.on("pageerror", (e) => errs.push(e.message));
+await page.goto(BASE + "/", { waitUntil: "networkidle" });
+await page.locator("#contact").scrollIntoViewIfNeeded();
+await page.waitForTimeout(900);
+
+const requests = [];
+// Same-origin GETs (a font file for the typed "Ć") are not the form sending anything.
+page.on("request", (r) => { if (!r.url().startsWith(BASE) || r.method() !== "GET") requests.push(`${r.method()} ${r.url()}`); });
+const errsText = () => page.$$eval(".mb-field__hint--error", (els) => els.map((e) => e.textContent));
+const btn = page.locator(".contact__form button[type=submit]");
+
+log("demo note:", await page.textContent(".contact__demo-note"));
+await btn.click();
+log("empty:", await errsText());
+await page.fill("input[name=name]", "Test");
+await page.fill("input[name=email]", "not-an-email");
+await page.fill("textarea[name=message]", "Ćao, šta ima? Đak, žaba, čvor.");
+await btn.click();
+log("invalid email:", await errsText());
+await page.fill("input[name=email]", "test@example.com");
+await btn.click();
+await btn.click({ force: true }).catch(() => {});
+log("sending:", await btn.textContent(), "| disabled:", await btn.isDisabled());
+await page.waitForSelector(".contact__success", { timeout: 5000 });
+log("success:", await page.textContent(".contact__success h3"), "| successes:", await page.locator(".contact__success").count());
+log("requests while submitting:", requests.length ? requests : "none");
+await page.click(".contact__success button");
+log("form back:", await page.isVisible(".contact__form"), errs.length ? "| pageerrors: " + errs : "| no page errors");
 await browser.close();

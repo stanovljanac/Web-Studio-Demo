@@ -2,6 +2,7 @@ import { Button } from "../ds";
 import { ArrowIcon } from "./icons";
 import { useScrolled } from "../hooks/useScrolled";
 import { Logo } from "./Logo";
+import { DemoPill } from "./DemoNotice";
 import { DemoText } from "./DemoValue";
 import { OFFER } from "../data/pricing";
 import { PATHS, sectionHref, usePage } from "../i18n";
@@ -35,6 +36,7 @@ export function Nav() {
         <a className="nav__logo" href={PATHS.home} aria-label={t.nav.home}>
           <Logo />
         </a>
+        <DemoPill inNav />
         <nav className="nav__links" aria-label={t.nav.label}>
           <a className="nav__link" href={href("work")}>
             {t.nav.work}

@@ -1,42 +1,34 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Button, Input, Textarea } from "../ds";
 import { ArrowIcon, CheckIcon, MailIcon, MessageIcon } from "./icons";
 import { Reveal } from "./Reveal";
-import { ContactLink, WithEmail } from "./Email";
+import { ContactLink } from "./Email";
 import { DemoText } from "./DemoValue";
 import { PATHS, useT } from "../i18n";
 
-/* ------------------------------------------------------------------
-   Web3Forms — free, no-backend email delivery for static sites.
-   The access key lives in .env as VITE_WEB3FORMS_ACCESS_KEY. It is
-   safe to expose in client-side code: it only ever delivers
-   submissions to the inbox registered with Web3Forms, nothing else.
------------------------------------------------------------------- */
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY ?? "";
+/* Demo form: it validates like a real one, shows "Sending…" for a moment
+   and then says that nothing was sent. No request leaves the page and
+   nothing is stored. */
+const FAKE_SEND_MS = 800;
 
 type Errors = { name?: string; email?: string; message?: string };
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "submitting" | "success";
 
 export function Contact() {
   const t = useT();
   const c = t.contact;
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
-  const [formError, setFormError] = useState("");
   // Guards against double submits before the "submitting" state re-renders.
   const busy = useRef(false);
+  const timer = useRef<number>();
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (busy.current) return;
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    // Honeypot: real visitors never see or tick this box.
-    if (data.get("botcheck")) {
-      setStatus("success");
-      return;
-    }
+    const data = new FormData(e.currentTarget);
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
@@ -46,41 +38,15 @@ export function Contact() {
     if (!email) next.email = c.errEmail;
     else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) next.email = c.errEmailInvalid;
     if (!message) next.message = c.errMessage;
-
-    if (Object.keys(next).length) {
-      setErrors(next);
-      return;
-    }
-    setErrors({});
-    setFormError("");
-
-    if (!WEB3FORMS_ACCESS_KEY) {
-      setStatus("error");
-      setFormError(c.errNotConnected);
-      return;
-    }
+    setErrors(next);
+    if (Object.keys(next).length) return;
 
     busy.current = true;
     setStatus("submitting");
-    try {
-      data.append("access_key", WEB3FORMS_ACCESS_KEY);
-      data.append("subject", c.subject);
-      data.append("from_name", "Northlane Studio demo");
-
-      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
-      const json = await res.json();
-      if (json.success) {
-        setStatus("success");
-      } else {
-        setStatus("error");
-        setFormError(c.errGeneric);
-      }
-    } catch {
-      setStatus("error");
-      setFormError(c.errNetwork);
-    } finally {
+    timer.current = window.setTimeout(() => {
       busy.current = false;
-    }
+      setStatus("success");
+    }, FAKE_SEND_MS);
   }
 
   return (
@@ -98,7 +64,7 @@ export function Contact() {
           <div className="contact__main" aria-live="polite">
             {status !== "success" ? (
               <form className="contact__form" onSubmit={onSubmit} noValidate>
-                <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" style={{ display: "none" }} />
+                <p className="contact__demo-note">{c.formNote}</p>
                 <div className="contact__row">
                   <Input
                     label={c.nameLabel}
@@ -123,11 +89,6 @@ export function Contact() {
                   rows={5}
                   error={errors.message}
                 />
-                {status === "error" && formError ? (
-                  <p className="contact__error" role="alert">
-                    <WithEmail text={formError} />
-                  </p>
-                ) : null}
                 <div>
                   <Button
                     variant="primary"
@@ -146,9 +107,7 @@ export function Contact() {
                   <CheckIcon aria-hidden="true" />
                 </div>
                 <h3>{c.successTitle}</h3>
-                <p>
-                  <DemoText text={c.successText} />
-                </p>
+                <p>{c.successText}</p>
                 <Button variant="secondary" onClick={() => setStatus("idle")}>
                   {c.sendAnother}
                 </Button>
@@ -160,29 +119,33 @@ export function Contact() {
             <h3 className="contact__aside-title">{c.directTitle}</h3>
             <ul className="contact__channels">
               <li>
-                <ContactLink kind="email">
+                <ContactLink>
                   <MailIcon aria-hidden="true" />
                   <span>
                     <b>{c.email}</b>
-                    <small>{c.opensEmail}</small>
+                    <small>{c.emailValue}</small>
                   </span>
                 </ContactLink>
               </li>
               <li>
-                <ContactLink kind="viber">
+                <ContactLink>
                   <MessageIcon aria-hidden="true" />
                   <span>
                     <b>{c.viber}</b>
-                    <small>{c.opensViber}</small>
+                    <small>
+                      <DemoText text={c.phoneValue} />
+                    </small>
                   </span>
                 </ContactLink>
               </li>
               <li>
-                <ContactLink kind="whatsapp">
+                <ContactLink>
                   <MessageIcon aria-hidden="true" />
                   <span>
                     <b>{c.whatsapp}</b>
-                    <small>{c.opensWhatsapp}</small>
+                    <small>
+                      <DemoText text={c.phoneValue} />
+                    </small>
                   </span>
                 </ContactLink>
               </li>
