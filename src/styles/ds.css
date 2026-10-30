@@ -1,0 +1,57 @@
+/* ============================================================
+   MihailoBuilds design system — component styles for src/ds
+   (Button, Input, Textarea). Token-driven: relies only on the
+   variables in tokens/.
+   ============================================================ */
+
+/* --- Button ----------------------------------------------- */
+.mb-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  font-family:var(--font-sans);font-weight:var(--fw-medium);white-space:nowrap;
+  border-radius:var(--radius-md);border:1px solid transparent;cursor:pointer;
+  transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),color var(--dur-fast) var(--ease-out);
+  text-decoration:none;user-select:none;}
+.mb-btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;}
+.mb-btn:active{transform:translateY(1px) scale(0.99);}
+.mb-btn[disabled],.mb-btn[aria-disabled="true"]{opacity:.45;pointer-events:none;}
+
+.mb-btn--sm{height:34px;padding:0 14px;font-size:var(--text-sm);}
+.mb-btn--md{height:42px;padding:0 18px;font-size:var(--text-sm);}
+.mb-btn--lg{height:52px;padding:0 26px;font-size:var(--text-md);}
+
+.mb-btn--primary{background:var(--accent);color:var(--on-accent);}
+.mb-btn--primary:hover{background:var(--accent-hover);box-shadow:var(--shadow-md);}
+.mb-btn--secondary{background:var(--surface-1);color:var(--text-primary);border-color:var(--border-strong);}
+.mb-btn--secondary:hover{border-color:var(--accent);}
+.mb-btn--block{display:flex;width:100%;}
+.mb-btn__icon{display:inline-flex;width:1.1em;height:1.1em;transform:translateY(0.08em);}  /* centred on the lowercase letters (Manrope's x-height sits ~0.08em below the line box centre) */
+.mb-btn__icon svg{width:100%;height:100%;}
+
+/* --- Field (Input / Textarea) ----------------------------- */
+.mb-field{display:flex;flex-direction:column;gap:var(--space-2);}
+.mb-field__label{font:var(--type-label);color:var(--text-secondary);}
+.mb-field__req{color:var(--accent);margin-left:2px;}
+.mb-input-wrap{position:relative;display:flex;align-items:center;}
+.mb-input-wrap__icon{position:absolute;left:14px;display:inline-flex;color:var(--text-muted);pointer-events:none;}
+.mb-input-wrap__icon svg{width:18px;height:18px;}
+.mb-input{width:100%;font-family:var(--font-sans);font-size:var(--text-sm);color:var(--text-primary);
+  background:var(--surface-1);border:1px solid var(--border-default);border-radius:var(--radius-md);
+  height:44px;padding:0 14px;transition:border-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out);}
+.mb-input.has-icon{padding-left:42px;}
+.mb-input::placeholder{color:var(--text-faint);}
+.mb-input:hover{border-color:var(--border-strong);}
+.mb-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring);background:var(--surface-2);}
+.mb-input[disabled]{opacity:.5;cursor:not-allowed;}
+.mb-input--invalid{border-color:var(--danger);}
+.mb-input--invalid:focus{box-shadow:0 0 0 3px var(--danger-bg);}
+.mb-field__hint{font:var(--type-label);font-size:var(--text-xs);color:var(--text-muted);}
+.mb-field__hint--error{color:var(--danger);}
+
+.mb-textarea{width:100%;font-family:var(--font-sans);font-size:var(--text-sm);line-height:1.6;color:var(--text-primary);
+  background:var(--surface-1);border:1px solid var(--border-default);border-radius:var(--radius-md);
+  padding:12px 14px;min-height:120px;resize:vertical;
+  transition:border-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out);}
+.mb-textarea::placeholder{color:var(--text-faint);}
+.mb-textarea:hover{border-color:var(--border-strong);}
+.mb-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring);background:var(--surface-2);}
+.mb-textarea--invalid{border-color:var(--danger);}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-label="MihailoBuilds">
+  <rect width="40" height="40" fill="#0B1B3F"/>
+  <rect y="35" width="40" height="5" fill="#2F5BFF"/>
+  <path fill="#FFFFFF" d="M7 27V11h3.9l2.35 7.6L15.6 11h3.9v16h-3.1v-9.4l-1.9 5.8H12l-1.9-5.8V27zM21 11h7a3.5 3.5 0 0 1 3.5 3.5v1A3.5 3.5 0 0 1 28 19h-7zM21 18.5h7.5a4 4 0 0 1 4 4v.5a4 4 0 0 1-4 4H21z"/>
+  <path fill="#0B1B3F" d="M24.3 14.1h3.05a1.25 1.25 0 0 1 0 2.5H24.3zM24.3 20.6h3.5a1.7 1.7 0 0 1 0 3.4h-3.5z"/>
+</svg>

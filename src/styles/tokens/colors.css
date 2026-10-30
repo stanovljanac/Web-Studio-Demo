@@ -1,0 +1,56 @@
+/* ============================================================
+   MihailoBuilds — colours.
+   White canvas, navy ink, cobalt accent #2F5BFF.
+   Components read these semantic names only.
+   ============================================================ */
+
+:root {
+  /* Backgrounds */
+  --bg-base: #FFFFFF;
+  --section-alt: #F5F7FB;         /* hero and work sections */
+  --nav-glass: rgba(255, 255, 255, 0.88);
+
+  /* Surfaces (cards, fields) */
+  --surface-1: #FFFFFF;
+  --surface-2: #F5F7FB;
+
+  /* Text */
+  --text-primary: #0B1B3F;
+  --text-secondary: #4B5568;
+  --text-muted: #59627A;
+  --text-faint: #6B7489;          /* 4.68 on white: the quietest small text */
+  --text-link: #1F45E0;
+
+  /* Borders */
+  --border-default: #DCE2EE;
+  --border-strong: #C9D2E3;
+  --card-border: 1px solid #DCE2EE;
+  --section-rule: 1px solid #DCE2EE;
+
+  /* Ink: dark bands (offer, footer), the phone frames, the logo tile */
+  --ink: #0B1B3F;
+  --on-ink: #FFFFFF;
+  --on-ink-muted: #C9D3EA;
+  --on-ink-faint: #A3AECB;
+  --on-ink-line: rgba(255, 255, 255, 0.14);
+
+  /* Accent */
+  --accent: #2F5BFF;
+  --accent-hover: #1F45E0;
+  --accent-text: #1F45E0;         /* accent as small text on white */
+  --on-accent: #FFFFFF;
+  --accent-on-ink: #A9BEFF;
+  --accent-soft: #EEF2FF;
+  --accent-line: #C7D4FF;         /* border of accent-soft boxes */
+  --accent-ring: rgba(47, 91, 255, 0.25);
+  --focus-ring: #2F5BFF;
+
+  /* Status */
+  --danger: #C2271D;
+  --danger-bg: rgba(194, 39, 29, 0.08);
+  --success: #157A4A;
+  --success-bg: rgba(21, 122, 74, 0.1);
+
+  /* Diagonal stripes of the screenshot placeholder */
+  --stripe: rgba(11, 27, 63, 0.04);
+}

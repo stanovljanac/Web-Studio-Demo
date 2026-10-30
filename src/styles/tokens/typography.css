@@ -1,0 +1,35 @@
+/* ============================================================
+   MihailoBuilds — typography.
+   Manrope for text and headings, JetBrains Mono for labels.
+   ============================================================ */
+
+:root {
+  /* Families (the fallbacks with matched metrics are defined in fonts.css) */
+  --font-sans: "Manrope", "Manrope Fallback", "Manrope Fallback Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-sans);
+  --font-display-caps: "Manrope", "Manrope Caps Fallback", "Manrope Caps Fallback Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;  /* uppercase 800: the hero title */
+  --font-mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Sizes (1rem = 16px); headings set their own clamp() sizes in site.css */
+  --text-xs:   0.75rem;   /* 12 */
+  --text-sm:   0.875rem;  /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-md:   1.125rem;  /* 18 */
+
+  /* Line heights */
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+
+  /* Roles */
+  --type-body: var(--fw-regular) var(--text-base)/var(--leading-normal) var(--font-sans);
+  --type-label: var(--fw-medium) var(--text-sm)/var(--leading-snug) var(--font-sans);
+}

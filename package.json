@@ -1,0 +1,30 @@
+{
+  "name": "mihailobuilds-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MihailoBuilds — websites and landing pages for small businesses.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "qa:leak": "node scripts/qa/leak.mjs",
+    "qa:main": "node scripts/qa/main.mjs",
+    "qa:site": "node scripts/qa/site.mjs",
+    "qa:shots": "node scripts/qa/shots.mjs"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "sharp": "^0.35.5",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
