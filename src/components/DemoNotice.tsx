@@ -55,9 +55,13 @@ export function DemoNoticeProvider({ children }: { children: ReactNode }) {
     open();
   }, [open]);
 
-  // A click on the backdrop lands on the <dialog> itself, not on its content.
+  /* A click on the backdrop lands on the <dialog> itself, but so does one on
+     the card's own padding: only a click outside its box closes it. */
   const onDialogClick = (e: MouseEvent<HTMLDialogElement>) => {
-    if (e.target === e.currentTarget) e.currentTarget.close();
+    const d = e.currentTarget;
+    const r = d.getBoundingClientRect();
+    const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    if (e.target === d && outside) d.close();
   };
 
   return (

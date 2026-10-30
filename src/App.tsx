@@ -19,29 +19,29 @@ export default function App({ page }: { page: Page }) {
   return (
     <PageContext.Provider value={{ page, t }}>
       <DemoNoticeProvider>
-      <div className={"page" + (OFFER.open ? " has-offer" : "")}>
-        <a className="skip-link" href="#main">
-          {t.skip}
-        </a>
-        <Nav />
-        <main id="main">
-          {page === "home" ? (
-            <>
-              <Hero />
-              <Audience />
-              <Projects />
-              <Services />
-              <Process />
-              <About />
-              <Faq />
-              <Contact />
-            </>
-          ) : (
-            <Privacy />
-          )}
-        </main>
-        <Footer />
-      </div>
+        <div className={"page" + (OFFER.open ? " has-offer" : "")}>
+          <a className="skip-link" href="#main">
+            {t.skip}
+          </a>
+          <Nav />
+          <main id="main">
+            {page === "home" ? (
+              <>
+                <Hero />
+                <Audience />
+                <Projects />
+                <Services />
+                <Process />
+                <About />
+                <Faq />
+                <Contact />
+              </>
+            ) : (
+              <Privacy />
+            )}
+          </main>
+          <Footer />
+        </div>
       </DemoNoticeProvider>
     </PageContext.Provider>
   );

@@ -61,9 +61,16 @@ const b = await launch();
   const afterReload = await state();
   await page.click(".demo-pill--corner");
   const pill = await state();
+  // Empty space inside the card keeps it open; the backdrop around it closes it.
+  const box = await page.locator(".demo-notice").boundingBox();
+  await page.mouse.click(box.x + 10, box.y + 10);
+  const padding = await state();
+  await page.mouse.click(5, 450);
+  const backdrop = await state();
+  await page.click(".demo-pill--corner");
   await page.click(".demo-notice__close");
   const closed = await state();
-  log(`demo notice: first visit open ${first.open}, focus inside ${first.inside} | Tab reached the page ${escaped}/8 | Esc closes ${!afterEsc.open} | after reload open ${afterReload.open} | pill reopens ${pill.open} | button closes ${!closed.open}`);
+  log(`demo notice: first visit open ${first.open}, focus inside ${first.inside} | Tab reached the page ${escaped}/8 | Esc closes ${!afterEsc.open} | after reload open ${afterReload.open} | pill reopens ${pill.open} | click in the card keeps it open ${padding.open} | backdrop closes ${!backdrop.open} | button closes ${!closed.open}`);
   await ctx.close();
 }
 
